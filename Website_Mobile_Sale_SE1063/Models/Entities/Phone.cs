@@ -28,7 +28,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         public string ScreenResolution { get; set; }
         public Nullable<int> RAM { get; set; }
         public string Platform { get; set; }
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
         public string Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

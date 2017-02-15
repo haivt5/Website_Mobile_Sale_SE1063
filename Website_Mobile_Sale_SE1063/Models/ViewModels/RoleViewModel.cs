@@ -7,5 +7,7 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
 {
     public class RoleViewModel
     {
+        public int Id;
+        public string Name;
     }
 }
