@@ -12,24 +12,18 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class AspNetRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Account()
+        public AspNetRole()
         {
-            this.ShoppingCarts = new HashSet<ShoppingCart>();
+            this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
-        public int Id { get; set; }
-        public string Password { get; set; }
-        public int RoleID { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
     
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

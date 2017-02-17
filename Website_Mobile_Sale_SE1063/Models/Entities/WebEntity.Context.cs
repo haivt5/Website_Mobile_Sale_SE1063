@@ -25,11 +25,15 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<AccountInfo> AccountInfoes { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CartDetail> CartDetails { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Phone> Phones { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public virtual DbSet<Phone> Phones { get; set; }
     }
 }

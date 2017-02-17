@@ -12,23 +12,23 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class ShoppingCart
+    public partial class AccountInfo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ShoppingCart()
+        public AccountInfo()
         {
-            this.CartDetails = new HashSet<CartDetail>();
+            this.ShoppingCarts = new HashSet<ShoppingCart>();
         }
     
         public int Id { get; set; }
-        public int AccountID { get; set; }
-        public int Quantity { get; set; }
-        public string Status { get; set; }
-        public decimal Total { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public int RoleID { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string UserId { get; set; }
     
-        public virtual AccountInfo AccountInfo { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartDetail> CartDetails { get; set; }
+        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

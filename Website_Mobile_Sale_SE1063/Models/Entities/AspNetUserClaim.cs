@@ -12,15 +12,13 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class CartDetail
+    public partial class AspNetUserClaim
     {
         public int Id { get; set; }
-        public Nullable<int> CartId { get; set; }
-        public Nullable<int> PhoneId { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Total { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
     
-        public virtual Phone Phone { get; set; }
-        public virtual ShoppingCart ShoppingCart { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Role()
         {
-            this.Accounts = new HashSet<Account>();
+            this.AccountInfoes = new HashSet<AccountInfo>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<AccountInfo> AccountInfoes { get; set; }
     }
 }
