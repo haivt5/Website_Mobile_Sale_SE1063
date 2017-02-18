@@ -5,13 +5,15 @@ using System.Web;
 
 namespace Website_Mobile_Sale_SE1063.Models.ViewModels
 {
-    public class AccountViewModel
+    public class AccountInfoViewModel
     {
         public int Id;
-        public RoleViewModel Role;
+        public int RoleID;
         public string Name;
         public string Address;
-        public string PhoneNumber;
-        public string Email;
+        public string UserId;
+
+        public AspNetUserViewModel AspNetUser;
+        public RoleViewModel Role;
     }
 }

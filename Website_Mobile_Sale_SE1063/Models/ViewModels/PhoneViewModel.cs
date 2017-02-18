@@ -9,13 +9,15 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
     {
         public int Id;
         public string Name;
-        public CategoryViewModel Category;
-        public double Capacity;
+        public int CategoryID;
+        public float Capacity;
         public string Color;
         public string ScreenResolution;
-        public int RAM;
+        public Nullable<int> RAM;
         public string Platform;
         public int Quantity;
         public string Image;
+
+        public CategoryViewModel Category;
     }
 }
