@@ -257,7 +257,7 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Services\AccountService.cs" />
+    <Compile Include="Models\Services\AccountInfoService.cs" />
     <Compile Include="Models\Services\CategoryService.cs" />
     <Compile Include="Models\Services\OrderDetailService.cs" />
     <Compile Include="Models\Services\OrderService.cs" />
