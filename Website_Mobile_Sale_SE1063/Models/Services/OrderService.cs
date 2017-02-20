@@ -28,13 +28,13 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         }
 
         /// <summary>
-        /// Get order by account id
+        /// Get order by account info id
         /// </summary>
         /// <param name="accountId"> Account id</param>
         /// <returns></returns>
-        public List<ShoppingCartViewModel> GetByAccountId(int accountId)
+        public List<ShoppingCartViewModel> GetByAccountId(int accountInfoId)
         {
-            List<ShoppingCart> orders = this.Entities.ShoppingCarts.Where(c => c.Account.Id == accountId).ToList();
+            List<ShoppingCart> orders = this.Entities.ShoppingCarts.Where(c => c.AccountInfo.Id == accountInfoId).ToList();
             Mapper.Initialize(c => c.CreateMap<List<ShoppingCart>, List<ShoppingCartViewModel>>());
             return Mapper.Map<List<ShoppingCartViewModel>>(orders);
         }
