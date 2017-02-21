@@ -6,14 +6,12 @@ using System.Web.Mvc;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
 {
-    public class OrderController : Controller
+    public class AccountInfoController : Controller
     {
-        // GET: Order
+        // GET: AccountInfo
         public ActionResult Index()
         {
             return View();
         }
-
-
     }
 }

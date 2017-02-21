@@ -9,7 +9,7 @@ using Website_Mobile_Sale_SE1063.Models.ViewModels;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
 {
-    public class ProductController : Controller
+    public class PhoneController : Controller
     {
         // GET: Product
         public ActionResult Index()
