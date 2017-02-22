@@ -427,13 +427,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
-    <Content Include="Views\Phone\Index.cshtml" />
+    <Content Include="Views\Phone\PhoneList.cshtml" />
     <Content Include="Views\ShoppingCart\Cart.cshtml" />
+    <Content Include="Views\Phone\PhoneDetail.cshtml" />
+    <Content Include="Views\CartDetail\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccountInfo\" />
-    <Folder Include="Views\CartDetail\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
