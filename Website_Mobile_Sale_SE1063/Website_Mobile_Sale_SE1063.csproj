@@ -260,10 +260,10 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Services\AccountInfoService.cs" />
+    <Compile Include="Models\Services\CartDetailService.cs" />
     <Compile Include="Models\Services\CategoryService.cs" />
-    <Compile Include="Models\Services\OrderDetailService.cs" />
-    <Compile Include="Models\Services\OrderService.cs" />
     <Compile Include="Models\Services\PhoneService.cs" />
+    <Compile Include="Models\Services\ShoppingCartService.cs" />
     <Compile Include="Models\ViewModels\AccountInfoViewModel.cs" />
     <Compile Include="Models\ViewModels\AspNetUserViewModel.cs" />
     <Compile Include="Models\ViewModels\CartDetailViewModel.cs" />

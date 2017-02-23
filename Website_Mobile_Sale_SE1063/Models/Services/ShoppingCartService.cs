@@ -8,11 +8,11 @@ using AutoMapper;
 
 namespace Website_Mobile_Sale_SE1063.Models.Services
 {
-    public class OrderService
+    public class ShoppingCartService
     {
         private WebEntitiyManager Entities;
 
-        public OrderService()
+        public ShoppingCartService()
         {
             this.Entities = new WebEntitiyManager();
         }
