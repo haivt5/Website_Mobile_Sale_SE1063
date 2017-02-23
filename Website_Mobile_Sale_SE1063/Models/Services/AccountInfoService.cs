@@ -22,9 +22,22 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             return this.entites.AccountInfoes.AsQueryable().ToList();
         }
 
-        public AccountInfo GetById(int id)
+        /// <summary>
+        /// Get infomation of an account
+        /// </summary>
+        /// <param name="id">Id of account (type: int - Id in AccountInfo table, not AspNetUser table)</param>
+        /// <returns></returns>
+        public AccountInfoViewModel GetById(int id)
         {
-            return this.entites.AccountInfoes.SingleOrDefault(q => q.Id == id);
+            AccountInfo accountInfo = this.entites.AccountInfoes.SingleOrDefault(q => q.Id == id);
+            Mapper.Initialize(c => c.CreateMap<AccountInfo, AccountInfoViewModel>());
+            AccountInfoViewModel model = Mapper.Map<AccountInfoViewModel>(accountInfo);
+
+            Mapper.Initialize(c => c.CreateMap<List<AspNetUser>, List<AspNetUserViewModel>>());
+            List<AspNetRole> roles = new AspNetUserService().GetRoleById(accountInfo.AspNetUser.Id);
+            model.AspNetRoles = Mapper.Map<List<AspNetRoleViewModel>>(roles);
+
+            return model;
         }
 
         public int Create(AccountInfoViewModel model)

@@ -10,7 +10,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
@@ -99,13 +98,6 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="250" />
         </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
             <PropertyRef Name="Id" />
@@ -126,18 +118,6 @@
             </Principal>
             <Dependent Role="AccountInfo">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccountInfo_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="AccountInfo" Type="Self.AccountInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AccountInfo">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -255,14 +235,9 @@
           <EntitySet Name="CartDetail" EntityType="Self.CartDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Phone" EntityType="Self.Phone" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AccountInfo_AspNetUsers" Association="Self.FK_AccountInfo_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AccountInfo" EntitySet="AccountInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccountInfo_Role" Association="Self.FK_AccountInfo_Role">
-            <End Role="Role" EntitySet="Role" />
             <End Role="AccountInfo" EntitySet="AccountInfo" />
           </AssociationSet>
           <AssociationSet Name="FK_CartDetail_Phone" Association="Self.FK_CartDetail_Phone">
@@ -311,14 +286,9 @@
           <EntitySet Name="CartDetails" EntityType="Model.CartDetail" />
           <EntitySet Name="Categories" EntityType="Model.Category" />
           <EntitySet Name="Phones" EntityType="Model.Phone" />
-          <EntitySet Name="Roles" EntityType="Model.Role" />
           <EntitySet Name="ShoppingCarts" EntityType="Model.ShoppingCart" />
           <AssociationSet Name="FK_AccountInfo_AspNetUsers" Association="Model.FK_AccountInfo_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AccountInfo" EntitySet="AccountInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccountInfo_Role" Association="Model.FK_AccountInfo_Role">
-            <End Role="Role" EntitySet="Roles" />
             <End Role="AccountInfo" EntitySet="AccountInfoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Shopping_Card_Account" Association="Model.FK_Shopping_Card_Account">
@@ -355,12 +325,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Model.FK_AccountInfo_AspNetUsers" FromRole="AccountInfo" ToRole="AspNetUser" />
-          <NavigationProperty Name="Role" Relationship="Model.FK_AccountInfo_Role" FromRole="AccountInfo" ToRole="Role" />
           <NavigationProperty Name="ShoppingCarts" Relationship="Model.FK_Shopping_Card_Account" FromRole="AccountInfo" ToRole="ShoppingCart" />
         </EntityType>
         <EntityType Name="AspNetRole">
@@ -451,14 +419,6 @@
           <NavigationProperty Name="CartDetails" Relationship="Model.FK_CartDetail_Phone" FromRole="Phone" ToRole="CartDetail" />
           <NavigationProperty Name="Category" Relationship="Model.FK_Phone_Category" FromRole="Phone" ToRole="Category" />
         </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AccountInfoes" Relationship="Model.FK_AccountInfo_Role" FromRole="Role" ToRole="AccountInfo" />
-        </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
             <PropertyRef Name="Id" />
@@ -481,18 +441,6 @@
             </Principal>
             <Dependent Role="AccountInfo">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccountInfo_Role">
-          <End Type="Model.Role" Role="Role" Multiplicity="1" />
-          <End Type="Model.AccountInfo" Role="AccountInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AccountInfo">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -588,7 +536,6 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -669,14 +616,6 @@
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Capacity" ColumnName="Capacity" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="Model.Role">
-              <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

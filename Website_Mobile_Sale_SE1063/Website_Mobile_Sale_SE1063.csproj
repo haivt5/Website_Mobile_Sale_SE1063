@@ -236,9 +236,6 @@
     <Compile Include="Models\Entities\Phone.cs">
       <DependentUpon>WebEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Role.cs">
-      <DependentUpon>WebEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\ShoppingCart.cs">
       <DependentUpon>WebEntity.tt</DependentUpon>
     </Compile>
@@ -260,11 +257,13 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Services\AccountInfoService.cs" />
+    <Compile Include="Models\Services\AspNetUserService.cs" />
     <Compile Include="Models\Services\CartDetailService.cs" />
     <Compile Include="Models\Services\CategoryService.cs" />
     <Compile Include="Models\Services\PhoneService.cs" />
     <Compile Include="Models\Services\ShoppingCartService.cs" />
     <Compile Include="Models\ViewModels\AccountInfoViewModel.cs" />
+    <Compile Include="Models\ViewModels\AspNetRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\AspNetUserViewModel.cs" />
     <Compile Include="Models\ViewModels\CartDetailViewModel.cs" />
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />

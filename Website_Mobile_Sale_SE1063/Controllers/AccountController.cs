@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Website_Mobile_Sale_SE1063.Models;
+using Website_Mobile_Sale_SE1063.Models.Services;
+using Website_Mobile_Sale_SE1063.Models.ViewModels;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
 {
@@ -156,12 +158,17 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    AccountInfoService service = new AccountInfoService();
+                    AccountInfoViewModel accountInfoModel = new AccountInfoViewModel();
+                    accountInfoModel.UserId = user.Id;
+                    service.Create(accountInfoModel);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -375,6 +382,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        UserManager.AddToRole(user.Id, "Admin");
                         return RedirectToLocal(returnUrl);
                     }
                 }

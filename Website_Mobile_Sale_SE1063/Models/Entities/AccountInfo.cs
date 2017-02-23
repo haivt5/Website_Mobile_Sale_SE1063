@@ -21,13 +21,11 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         }
     
         public int Id { get; set; }
-        public int RoleID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string UserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
