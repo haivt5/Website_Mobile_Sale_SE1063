@@ -9,9 +9,9 @@ namespace Website_Mobile_Sale_SE1063.Controllers
     public class CartDetailController : Controller
     {
         // GET: CartDetail
-        public ActionResult Index()
+        public ActionResult Checkout(string returnUrl)
         {
-            return View();
+            return View(returnUrl);
         }
     }
 }

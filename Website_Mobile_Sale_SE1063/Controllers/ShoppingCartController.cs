@@ -9,8 +9,9 @@ namespace Website_Mobile_Sale_SE1063.Controllers
     public class ShoppingCartController : Controller
     {
         // GET: ShoppingCart
-        public ActionResult Index()
+        public ActionResult Cart(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
     }

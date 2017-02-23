@@ -12,8 +12,15 @@ namespace Website_Mobile_Sale_SE1063.Controllers
     public class PhoneController : Controller
     {
         // GET: Product
-        public ActionResult Index()
+        public ActionResult PhoneList(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        public ActionResult PhoneDetail(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
