@@ -45,7 +45,18 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             Mapper.Initialize(c => c.CreateMap<AccountInfoViewModel, AccountInfo>());
             AccountInfo AccountInfo = Mapper.Map<AccountInfo>(model);
             var result = this.entites.AccountInfoes.Add(AccountInfo);
-            this.entites.SaveChanges();
+            result.Name = "";
+            result.Address = "";
+            try
+            {
+                this.entites.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+                throw;
+            }
             return result.Id;
         }
     }

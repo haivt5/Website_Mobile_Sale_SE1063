@@ -93,6 +93,29 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> LoginWithoutModel(string Email, string Password, bool RememberMe, string returnUrl)
+        {
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(Email, Password, RememberMe, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    //ModelState.AddModelError("", "Invalid login attempt.");
+                    ViewBag.Error = "Invalid login attempt!";
+                    return View("Login");
+            }
+        }
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -178,6 +201,38 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> RegisterWithoutModel(string Email, string Password, string PasswordConfirm)
+        {
+            if (Password != PasswordConfirm)
+                return View("Login");
+            var user = new ApplicationUser { UserName = Email, Email = Email };
+            var result = await UserManager.CreateAsync(user, Password);
+            if (result.Succeeded)
+            {
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                AccountInfoService service = new AccountInfoService();
+                AccountInfoViewModel accountInfoModel = new AccountInfoViewModel();
+                accountInfoModel.UserId = user.Id;
+                service.Create(accountInfoModel);
+
+                return RedirectToAction("Index", "Home");
+            }
+            AddErrors(result);
+
+            // If we got this far, something failed, redisplay form
+            return View();
+        }
+
 
         //
         // GET: /Account/ConfirmEmail
