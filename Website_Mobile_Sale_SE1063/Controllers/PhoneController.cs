@@ -32,9 +32,9 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             return View();
         }
 
-        public ActionResult Product(int id)
+        public ActionResult Phone(int id)
         {
-            PhoneService service = new PhoneService();
+            IPhoneService service = new PhoneService();
             PhoneViewModel model = service.GetById(id);
             return View(model);
         }
