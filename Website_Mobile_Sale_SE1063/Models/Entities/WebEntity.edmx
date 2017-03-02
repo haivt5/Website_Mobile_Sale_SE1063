@@ -82,12 +82,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ParentId" Type="int" />
         </EntityType>
         <EntityType Name="Phone">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="Capacity" Type="real" Nullable="false" />
@@ -97,6 +98,7 @@
           <Property Name="Platform" Type="nchar" MaxLength="10" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="250" />
+          <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -142,6 +144,18 @@
             </Principal>
             <Dependent Role="CartDetail">
               <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Category1" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -248,6 +262,10 @@
             <End Role="ShoppingCart" EntitySet="ShoppingCart" />
             <End Role="CartDetail" EntitySet="CartDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_Category_Category" Association="Self.FK_Category_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -310,6 +328,10 @@
           <AssociationSet Name="FK_CartDetail_Shopping_Cart" Association="Model.FK_CartDetail_Shopping_Cart">
             <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
             <End Role="CartDetail" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Category" Association="Model.FK_Category_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Category1" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_Phone_Category" Association="Model.FK_Phone_Category">
             <End Role="Category" EntitySet="Categories" />
@@ -400,13 +422,16 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <NavigationProperty Name="Category1" Relationship="Model.FK_Category_Category" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="Category2" Relationship="Model.FK_Category_Category" FromRole="Category1" ToRole="Category" />
           <NavigationProperty Name="Phones" Relationship="Model.FK_Phone_Category" FromRole="Category" ToRole="Phone" />
         </EntityType>
         <EntityType Name="Phone">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="Capacity" Type="Single" Nullable="false" />
@@ -416,6 +441,7 @@
           <Property Name="Platform" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="CartDetails" Relationship="Model.FK_CartDetail_Phone" FromRole="Phone" ToRole="CartDetail" />
           <NavigationProperty Name="Category" Relationship="Model.FK_Phone_Category" FromRole="Phone" ToRole="Category" />
         </EntityType>
@@ -505,6 +531,18 @@
             </Principal>
             <Dependent Role="CartDetail">
               <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Category">
+          <End Type="Model.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="Model.Category" Role="Category1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -599,6 +637,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Model.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -608,6 +647,7 @@
           <EntitySetMapping Name="Phones">
             <EntityTypeMapping TypeName="Model.Phone">
               <MappingFragment StoreEntitySet="Phone">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Platform" ColumnName="Platform" />

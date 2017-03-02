@@ -9,22 +9,29 @@ using AutoMapper;
 namespace Website_Mobile_Sale_SE1063.Models.Services
 {
     
-
-
-    public class PhoneService
+    public interface IPhoneService
     {
-        private WebEntitiyManager entites;
+        List<PhoneViewModel> GetAll();
+        PhoneViewModel GetById(int id);
+        List<Phone> GetByCategoryId(int categoryId);
+    }
 
-        public PhoneService()
-        {
-            this.entites = new WebEntitiyManager();
-        }
+    public class PhoneService : IPhoneService
+    {
+        private WebEntitiyManager entites = new WebEntitiyManager();
 
         public List<PhoneViewModel> GetAll()
         {
             List<Phone> products = this.entites.Phones.AsQueryable().ToList();
             Mapper.Initialize(c => c.CreateMap<List<Phone>, List<PhoneViewModel>>());
-            return Mapper.Map<List<PhoneViewModel>>(products);
+            List<PhoneViewModel> model = Mapper.Map<List<PhoneViewModel>>(products);
+            return model;
+        }
+
+        public List<Phone> GetByCategoryId(int categoryId)
+        {
+            List<Phone> products = this.entites.Phones.Where(q => q.CategoryID == categoryId).AsEnumerable().ToList();
+            return products;
         }
 
         public PhoneViewModel GetById(int id)
