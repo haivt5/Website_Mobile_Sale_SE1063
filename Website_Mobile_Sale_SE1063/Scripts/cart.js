@@ -1,11 +1,11 @@
-﻿
+﻿var cart = null;
 
-var cart = null;
-
-function Initialize() {
+function Initialize(accountId) {
     var jsonString = localStorage.getItem("mobile_cart");
-    if (jsonString == null)
+    if (jsonString == null){
         cart = new Array();
+        CreateCartServer(accountId);
+    }
     else
         cart = JSON.parse(jsonString);
 }
@@ -73,6 +73,26 @@ function RemoveCart() {
     Persist();
 }
 
-function CreateCartServer() {
-
+function CreateCartServer(accountId) {
+    var d = new Date();
+    $.ajax({
+        url: '/ShoppingCart/Create',
+        type: 'POST',
+        data: {
+            AccountID: accountId,
+            Quantity: 0,
+            Status: 'new',
+            Total: 0,
+            DateCreated: d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " "
+                + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
+        },
+        success: function (result) {
+            if (!result.Success) {
+                alert(result.Error);
+            }
+        },
+        error: function () {
+            alert('Network connection error!');
+        }
+    });
 }

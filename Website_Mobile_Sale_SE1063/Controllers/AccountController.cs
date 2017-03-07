@@ -188,10 +188,6 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    AccountInfoService service = new AccountInfoService();
-                    AccountInfoViewModel accountInfoModel = new AccountInfoViewModel();
-                    accountInfoModel.UserId = user.Id;
-                    service.Create(accountInfoModel);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -220,10 +216,6 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                 // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                AccountInfoService service = new AccountInfoService();
-                AccountInfoViewModel accountInfoModel = new AccountInfoViewModel();
-                accountInfoModel.UserId = user.Id;
-                service.Create(accountInfoModel);
 
                 return RedirectToAction("Index", "Home");
             }

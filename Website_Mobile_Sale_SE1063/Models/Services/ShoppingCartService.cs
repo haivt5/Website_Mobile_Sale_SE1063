@@ -8,7 +8,16 @@ using AutoMapper;
 
 namespace Website_Mobile_Sale_SE1063.Models.Services
 {
-    public class ShoppingCartService
+
+    public interface IShoppingCartService
+    {
+        List<ShoppingCart> GetAll();
+        ShoppingCart GetById(int id);
+        List<ShoppingCartViewModel> GetByAccountId(string accountId);
+        int Create(ShoppingCartCreateViewModel model);
+    }
+
+    public class ShoppingCartService : IShoppingCartService
     {
         private WebEntitiyManager Entities;
 
@@ -27,17 +36,27 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             return this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == id);
         }
 
-        /// <summary>
-        /// Get order by account info id
-        /// </summary>
-        /// <param name="accountId"> Account id</param>
-        /// <returns></returns>
-        public List<ShoppingCartViewModel> GetByAccountId(int accountInfoId)
+        public List<ShoppingCartViewModel> GetByAccountId(string accountId)
         {
-            List<ShoppingCart> orders = this.Entities.ShoppingCarts.Where(c => c.AccountInfo.Id == accountInfoId).ToList();
+            List<ShoppingCart> orders = this.Entities.ShoppingCarts.Where(c => c.AspNetUser.Id == accountId).ToList();
             Mapper.Initialize(c => c.CreateMap<List<ShoppingCart>, List<ShoppingCartViewModel>>());
             return Mapper.Map<List<ShoppingCartViewModel>>(orders);
         }
 
+        public int Create(ShoppingCartCreateViewModel model)
+        {
+            try
+            {
+                Mapper.Initialize(c => c.CreateMap<ShoppingCartCreateViewModel, ShoppingCart>());
+                ShoppingCart cart = Mapper.Map<ShoppingCart>(model);
+                var shoppingCart = this.Entities.ShoppingCarts.Add(cart);
+                this.Entities.SaveChanges();
+                return shoppingCart.Id;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
