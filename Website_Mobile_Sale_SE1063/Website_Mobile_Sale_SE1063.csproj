@@ -275,6 +275,7 @@
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\PhoneViewModel.cs" />
     <Compile Include="Models\ViewModels\RoleViewModel.cs" />
+    <Compile Include="Models\ViewModels\ShoppingCartCheckoutViewModel.cs" />
     <Compile Include="Models\ViewModels\ShoppingCartCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\ShoppingCartViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,6 +330,33 @@
     <Content Include="Content\images\home\sale.png" />
     <Content Include="Content\images\home\searchicon.png" />
     <Content Include="Content\images\home\shipping.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone2g.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone3.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone3gs.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone4.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone4s.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone5.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone5c.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone5s.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6+.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s_black.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s_gold.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s_white.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone7+.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone7.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\G1.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g2.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g3.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g4.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g5.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g6.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s1.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s2.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s3.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s4.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s5.jpg" />
     <Content Include="Content\images\product-details\1.jpg" />
     <Content Include="Content\images\product-details\new.jpg" />
     <Content Include="Content\images\product-details\rating.png" />
@@ -440,6 +468,7 @@
     <Content Include="Views\ShoppingCart\Cart.cshtml" />
     <Content Include="Views\Phone\PhoneDetail.cshtml" />
     <Content Include="Views\CartDetail\Checkout.cshtml" />
+    <Content Include="Views\Shared\_LayoutWithoutCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

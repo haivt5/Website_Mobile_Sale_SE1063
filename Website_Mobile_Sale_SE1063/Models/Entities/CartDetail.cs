@@ -20,7 +20,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Total { get; set; }
     
-        public virtual Phone Phone { get; set; }
         public virtual ShoppingCart ShoppingCart { get; set; }
+        public virtual Phone Phone { get; set; }
     }
 }

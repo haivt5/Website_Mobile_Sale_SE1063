@@ -108,6 +108,7 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="250" />
           <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="3000" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -325,7 +326,6 @@
           <EntitySet Name="CartDetails" EntityType="Model.CartDetail" />
           <EntitySet Name="Categories" EntityType="Model.Category" />
           <EntitySet Name="Colors" EntityType="Model.Color" />
-          <EntitySet Name="Phones" EntityType="Model.Phone" />
           <EntitySet Name="ShoppingCarts" EntityType="Model.ShoppingCart" />
           <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -340,10 +340,6 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
           </AssociationSet>
-          <AssociationSet Name="FK_CartDetail_Phone" Association="Model.FK_CartDetail_Phone">
-            <End Role="Phone" EntitySet="Phones" />
-            <End Role="CartDetail" EntitySet="CartDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_CartDetail_Shopping_Cart" Association="Model.FK_CartDetail_Shopping_Cart">
             <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
             <End Role="CartDetail" EntitySet="CartDetails" />
@@ -352,6 +348,15 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Category1" EntitySet="Categories" />
           </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Model.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Phones" EntityType="Model.Phone" />
+          <AssociationSet Name="FK_CartDetail_Phone" Association="Model.FK_CartDetail_Phone">
+            <End Role="Phone" EntitySet="Phones" />
+            <End Role="CartDetail" EntitySet="CartDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Phone_Category" Association="Model.FK_Phone_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Phone" EntitySet="Phones" />
@@ -359,10 +364,6 @@
           <AssociationSet Name="FK_Color_Phone" Association="Model.FK_Color_Phone">
             <End Role="Phone" EntitySet="Phones" />
             <End Role="Color" EntitySet="Colors" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Model.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountInfo">
@@ -435,8 +436,8 @@
           <Property Name="PhoneId" Type="Int32" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Phone" Relationship="Model.FK_CartDetail_Phone" FromRole="CartDetail" ToRole="Phone" />
           <NavigationProperty Name="ShoppingCart" Relationship="Model.FK_CartDetail_Shopping_Cart" FromRole="CartDetail" ToRole="ShoppingCart" />
+          <NavigationProperty Name="Phone" Relationship="Model.FK_CartDetail_Phone" FromRole="CartDetail" ToRole="Phone" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -458,24 +459,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="PhoneId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Phone" Relationship="Model.FK_Color_Phone" FromRole="Color" ToRole="Phone" />
-        </EntityType>
-        <EntityType Name="Phone">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="Capacity" Type="Single" Nullable="false" />
-          <Property Name="ScreenResolution" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="RAM" Type="Int32" />
-          <Property Name="Platform" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="CartDetails" Relationship="Model.FK_CartDetail_Phone" FromRole="Phone" ToRole="CartDetail" />
-          <NavigationProperty Name="Category" Relationship="Model.FK_Phone_Category" FromRole="Phone" ToRole="Category" />
-          <NavigationProperty Name="Colors" Relationship="Model.FK_Color_Phone" FromRole="Phone" ToRole="Color" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -540,18 +523,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CartDetail_Phone">
-          <End Type="Model.Phone" Role="Phone" Multiplicity="0..1" />
-          <End Type="Model.CartDetail" Role="CartDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Phone">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CartDetail">
-              <PropertyRef Name="PhoneId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CartDetail_Shopping_Cart">
           <End Type="Model.ShoppingCart" Role="ShoppingCart" Multiplicity="0..1" />
           <End Type="Model.CartDetail" Role="CartDetail" Multiplicity="*" />
@@ -573,6 +544,41 @@
             </Principal>
             <Dependent Role="Category1">
               <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="Model.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Capacity" Type="Single" Nullable="false" />
+          <Property Name="ScreenResolution" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="RAM" Type="Int32" />
+          <Property Name="Platform" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Description" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CartDetails" Relationship="Model.FK_CartDetail_Phone" FromRole="Phone" ToRole="CartDetail" />
+          <NavigationProperty Name="Category" Relationship="Model.FK_Phone_Category" FromRole="Phone" ToRole="Category" />
+          <NavigationProperty Name="Colors" Relationship="Model.FK_Color_Phone" FromRole="Phone" ToRole="Color" />
+        </EntityType>
+        <Association Name="FK_CartDetail_Phone">
+          <End Type="Model.Phone" Role="Phone" Multiplicity="0..1" />
+          <End Type="Model.CartDetail" Role="CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phone">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartDetail">
+              <PropertyRef Name="PhoneId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -599,10 +605,6 @@
               <PropertyRef Name="PhoneId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="Model.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -697,22 +699,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Phones">
-            <EntityTypeMapping TypeName="Model.Phone">
-              <MappingFragment StoreEntitySet="Phone">
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Platform" ColumnName="Platform" />
-                <ScalarProperty Name="RAM" ColumnName="RAM" />
-                <ScalarProperty Name="ScreenResolution" ColumnName="ScreenResolution" />
-                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ShoppingCarts">
             <EntityTypeMapping TypeName="Model.ShoppingCart">
               <MappingFragment StoreEntitySet="ShoppingCart">
@@ -744,6 +730,23 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Phones">
+            <EntityTypeMapping TypeName="Model.Phone">
+              <MappingFragment StoreEntitySet="Phone">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Platform" ColumnName="Platform" />
+                <ScalarProperty Name="RAM" ColumnName="RAM" />
+                <ScalarProperty Name="ScreenResolution" ColumnName="ScreenResolution" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
