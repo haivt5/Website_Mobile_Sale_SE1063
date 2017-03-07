@@ -12,11 +12,12 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class AccountInfo
+    public partial class Color
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string UserId { get; set; }
+        public int PhoneId { get; set; }
+    
+        public virtual Phone Phone { get; set; }
     }
 }
