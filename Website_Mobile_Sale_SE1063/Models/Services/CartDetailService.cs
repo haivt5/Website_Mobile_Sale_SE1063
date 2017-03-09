@@ -4,10 +4,19 @@ using System.Linq;
 using System.Web;
 using Website_Mobile_Sale_SE1063.Models.Entities;
 using Website_Mobile_Sale_SE1063.Models.ViewModels;
+using AutoMapper;
 
 namespace Website_Mobile_Sale_SE1063.Models.Services
 {
-    public class CartDetailService
+
+    public interface ICartDetailService
+    {
+        List<CartDetail> GetAll();
+        CartDetail GetById(int id);
+        List<CartDetail> GetByCartId(int cartId);
+    }
+
+    public class CartDetailService : ICartDetailService
     {
         private WebEntitiyManager entities;
 

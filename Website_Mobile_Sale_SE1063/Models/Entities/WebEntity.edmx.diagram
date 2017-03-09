@@ -11,11 +11,10 @@
         <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="4.5" />
         <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="3" PointY="2.875" />
         <EntityTypeShape EntityType="Model.CartDetail" Width="1.5" PointX="7.5" PointY="1.25" />
-        <EntityTypeShape EntityType="Model.Category" Width="1.5" PointX="3" PointY="11.375" />
-        <EntityTypeShape EntityType="Model.Color" Width="1.5" PointX="7.5" PointY="11.625" />
-        <EntityTypeShape EntityType="Model.Phone" Width="1.5" PointX="5.25" PointY="10.75" />
+        <EntityTypeShape EntityType="Model.Category" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="Model.Color" Width="1.5" PointX="7.5" PointY="10.875" />
+        <EntityTypeShape EntityType="Model.Phone" Width="1.5" PointX="5.25" PointY="10" />
         <EntityTypeShape EntityType="Model.ShoppingCart" Width="1.5" PointX="5.25" PointY="1.25" />
-        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="7.75" PointY="7.75" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="Model.FK_ShoppingCart_AspNetUsers" />

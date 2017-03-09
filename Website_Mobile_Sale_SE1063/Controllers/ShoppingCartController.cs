@@ -5,16 +5,23 @@ using System.Web;
 using System.Web.Mvc;
 using Website_Mobile_Sale_SE1063.Models.ViewModels;
 using Website_Mobile_Sale_SE1063.Models.Services;
+using Website_Mobile_Sale_SE1063.Models.Entities;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
 {
     public class ShoppingCartController : Controller
     {
         // GET: ShoppingCart
-        public ActionResult Cart(string returnUrl)
+        public ActionResult Cart(int cartId)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            IShoppingCartService cartService = new ShoppingCartService();
+            ICartDetailService cartDetailService = new CartDetailService();
+
+            List<CartDetail> cartDetails = cartDetailService.GetByCartId(cartId);
+            ShoppingCartCheckoutViewModel model = new ShoppingCartCheckoutViewModel();
+            model.CartDetails = cartDetails;
+            model.Total = cartDetails.Sum(q => q.Total).Value;
+            return View(model);
         }
 
         [HttpPost]
@@ -38,5 +45,11 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             }
             
         }
+
+        //[HttpPost]
+        //public JsonResult Add(int PhoneId, int Quantity)
+        //{
+            
+        //}
     }
 }

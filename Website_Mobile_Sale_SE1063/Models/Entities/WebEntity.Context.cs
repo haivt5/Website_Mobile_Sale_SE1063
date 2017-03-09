@@ -35,6 +35,5 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Phone> Phones { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }
