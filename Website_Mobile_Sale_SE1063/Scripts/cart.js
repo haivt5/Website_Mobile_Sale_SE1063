@@ -2,6 +2,7 @@
     this.PhoneId = PhoneId;
     this.Quantity = Quantity;
     this.Price = Price;
+    this.Id = "";
 }
 
 function Cart() {
@@ -76,6 +77,7 @@ function Cart() {
 
     this.CreateOnServer = function (accountId) {
         var d = new Date();
+        var cartId = "";
         $.ajax({
             url: '/ShoppingCart/Create',
             type: 'POST',
@@ -90,11 +92,15 @@ function Cart() {
             success: function (result) {
                 if (!result.Success) {
                     alert(result.Error);
+                } else {
+                    cartId = result.CartId;
                 }
             },
             error: function () {
                 alert('Network connection error!');
             }
+        }).done(function () {
+            this.Details.Id = cartId;
         });
     }
 

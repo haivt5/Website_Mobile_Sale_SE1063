@@ -45,5 +45,35 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             service.GetAll();
             return Json(new { });
         }
+
+        public JsonResult GetAllGroupByCategory()
+        {
+            IPhoneService service = new PhoneService();
+            Phone[] phones = service.GetAllGroupByCategory().ToArray();
+            return Json(phones);
+        }
+
+        [HttpPost]
+        public JsonResult GetHotPhones()
+        {
+            ICartDetailService cartDetailService = new CartDetailService();
+            IPhoneService phoneService = new PhoneService();
+
+            var result = cartDetailService.GetAll().GroupBy(q => q.PhoneId).Select(q => new
+            {
+                Total = q.Sum(a => a.Quantity),
+                Phone = phoneService.GetById(q.Key.Value),
+            }).OrderByDescending(q => q.Total).Take(12).AsEnumerable().ToList();
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult GetNewPhones()
+        {
+            IPhoneService phoneService = new PhoneService();
+            var phones = phoneService.GetNewPhones().ToArray();
+            return Json(phones);
+        }
     }
 }

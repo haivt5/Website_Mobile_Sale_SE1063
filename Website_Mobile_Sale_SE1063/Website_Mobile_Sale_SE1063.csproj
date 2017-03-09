@@ -243,9 +243,6 @@
     <Compile Include="Models\Entities\ShoppingCart.cs">
       <DependentUpon>WebEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\sysdiagram.cs">
-      <DependentUpon>WebEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\WebEntity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

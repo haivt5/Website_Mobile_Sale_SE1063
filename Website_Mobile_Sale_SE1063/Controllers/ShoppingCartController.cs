@@ -20,6 +20,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             List<CartDetail> cartDetails = cartDetailService.GetByCartId(cartId);
             ShoppingCartCheckoutViewModel model = new ShoppingCartCheckoutViewModel();
             model.CartDetails = cartDetails;
+            model.Total = cartDetails.Sum(q => q.Total).Value;
             return View(model);
         }
 
@@ -44,5 +45,11 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             }
             
         }
+
+        //[HttpPost]
+        //public JsonResult Add(int PhoneId, int Quantity)
+        //{
+            
+        //}
     }
 }
