@@ -30,6 +30,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         public string Platform { get; set; }
         public int Quantity { get; set; }
         public string Image { get; set; }
+        public decimal Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartDetail> CartDetails { get; set; }
