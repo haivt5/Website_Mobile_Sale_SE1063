@@ -64,6 +64,8 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="CartDetail">
           <Key>
@@ -84,6 +86,14 @@
           <Property Name="Description" Type="nvarchar" MaxLength="2000" />
           <Property Name="ParentId" Type="int" />
         </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PhoneId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Phone">
           <Key>
             <PropertyRef Name="Id" />
@@ -92,7 +102,6 @@
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="Capacity" Type="real" Nullable="false" />
-          <Property Name="Color" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="ScreenResolution" Type="nchar" MaxLength="10" />
           <Property Name="RAM" Type="int" />
           <Property Name="Platform" Type="nchar" MaxLength="10" />
@@ -105,24 +114,22 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Status" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Total" Type="money" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" />
         </EntityType>
-        <Association Name="FK_AccountInfo_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="AccountInfo" Type="Self.AccountInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AccountInfo">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <Association Name="FK_CartDetail_Phone">
           <End Role="Phone" Type="Self.Phone" Multiplicity="0..1" />
           <End Role="CartDetail" Type="Self.CartDetail" Multiplicity="*" />
@@ -156,6 +163,18 @@
             </Principal>
             <Dependent Role="Category1">
               <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Color_Phone">
+          <End Role="Phone" Type="Self.Phone" Multiplicity="1" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phone">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="PhoneId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -227,11 +246,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shopping Card_Account">
-          <End Role="AccountInfo" Type="Self.AccountInfo" Multiplicity="1" />
+        <Association Name="FK_ShoppingCart_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AccountInfo">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ShoppingCart">
@@ -248,12 +267,10 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CartDetail" EntityType="Self.CartDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Phone" EntityType="Self.Phone" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_AccountInfo_AspNetUsers" Association="Self.FK_AccountInfo_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AccountInfo" EntitySet="AccountInfo" />
-          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CartDetail_Phone" Association="Self.FK_CartDetail_Phone">
             <End Role="Phone" EntitySet="Phone" />
             <End Role="CartDetail" EntitySet="CartDetail" />
@@ -265,6 +282,10 @@
           <AssociationSet Name="FK_Category_Category" Association="Self.FK_Category_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Color_Phone" Association="Self.FK_Color_Phone">
+            <End Role="Phone" EntitySet="Phone" />
+            <End Role="Color" EntitySet="Color" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -286,8 +307,8 @@
             <End Role="Category" EntitySet="Category" />
             <End Role="Phone" EntitySet="Phone" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shopping Card_Account" Association="Self.FK_Shopping Card_Account">
-            <End Role="AccountInfo" EntitySet="AccountInfo" />
+          <AssociationSet Name="FK_ShoppingCart_AspNetUsers" Association="Self.FK_ShoppingCart_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="ShoppingCart" EntitySet="ShoppingCart" />
           </AssociationSet>
         </EntityContainer>
@@ -303,16 +324,10 @@
           <EntitySet Name="AspNetUsers" EntityType="Model.AspNetUser" />
           <EntitySet Name="CartDetails" EntityType="Model.CartDetail" />
           <EntitySet Name="Categories" EntityType="Model.Category" />
+          <EntitySet Name="Colors" EntityType="Model.Color" />
           <EntitySet Name="Phones" EntityType="Model.Phone" />
           <EntitySet Name="ShoppingCarts" EntityType="Model.ShoppingCart" />
-          <AssociationSet Name="FK_AccountInfo_AspNetUsers" Association="Model.FK_AccountInfo_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AccountInfo" EntitySet="AccountInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shopping_Card_Account" Association="Model.FK_Shopping_Card_Account">
-            <End Role="AccountInfo" EntitySet="AccountInfoes" />
-            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
-          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -320,6 +335,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCart_AspNetUsers" Association="Model.FK_ShoppingCart_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
           </AssociationSet>
           <AssociationSet Name="FK_CartDetail_Phone" Association="Model.FK_CartDetail_Phone">
             <End Role="Phone" EntitySet="Phones" />
@@ -337,6 +356,10 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Phone" EntitySet="Phones" />
           </AssociationSet>
+          <AssociationSet Name="FK_Color_Phone" Association="Model.FK_Color_Phone">
+            <End Role="Phone" EntitySet="Phones" />
+            <End Role="Color" EntitySet="Colors" />
+          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Model.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -350,8 +373,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Model.FK_AccountInfo_AspNetUsers" FromRole="AccountInfo" ToRole="AspNetUser" />
-          <NavigationProperty Name="ShoppingCarts" Relationship="Model.FK_Shopping_Card_Account" FromRole="AccountInfo" ToRole="ShoppingCart" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -398,9 +419,11 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AccountInfoes" Relationship="Model.FK_AccountInfo_AspNetUsers" FromRole="AspNetUser" ToRole="AccountInfo" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="Model.FK_ShoppingCart_AspNetUsers" FromRole="AspNetUser" ToRole="ShoppingCart" />
           <NavigationProperty Name="AspNetRoles" Relationship="Model.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="CartDetail">
@@ -427,6 +450,15 @@
           <NavigationProperty Name="Category2" Relationship="Model.FK_Category_Category" FromRole="Category1" ToRole="Category" />
           <NavigationProperty Name="Phones" Relationship="Model.FK_Phone_Category" FromRole="Category" ToRole="Phone" />
         </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Phone" Relationship="Model.FK_Color_Phone" FromRole="Color" ToRole="Phone" />
+        </EntityType>
         <EntityType Name="Phone">
           <Key>
             <PropertyRef Name="Id" />
@@ -435,7 +467,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="Capacity" Type="Single" Nullable="false" />
-          <Property Name="Color" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="ScreenResolution" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="RAM" Type="Int32" />
           <Property Name="Platform" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
@@ -444,44 +475,31 @@
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="CartDetails" Relationship="Model.FK_CartDetail_Phone" FromRole="Phone" ToRole="CartDetail" />
           <NavigationProperty Name="Category" Relationship="Model.FK_Phone_Category" FromRole="Phone" ToRole="Category" />
+          <NavigationProperty Name="Colors" Relationship="Model.FK_Color_Phone" FromRole="Phone" ToRole="Color" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AccountInfo" Relationship="Model.FK_Shopping_Card_Account" FromRole="ShoppingCart" ToRole="AccountInfo" />
+          <NavigationProperty Name="AspNetUser" Relationship="Model.FK_ShoppingCart_AspNetUsers" FromRole="ShoppingCart" ToRole="AspNetUser" />
           <NavigationProperty Name="CartDetails" Relationship="Model.FK_CartDetail_Shopping_Cart" FromRole="ShoppingCart" ToRole="CartDetail" />
         </EntityType>
-        <Association Name="FK_AccountInfo_AspNetUsers">
-          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="Model.AccountInfo" Role="AccountInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AccountInfo">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Shopping_Card_Account">
-          <End Type="Model.AccountInfo" Role="AccountInfo" Multiplicity="1" />
-          <End Type="Model.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ShoppingCart">
-              <PropertyRef Name="AccountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -507,6 +525,18 @@
             </Principal>
             <Dependent Role="AspNetUserLogin">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingCart_AspNetUsers">
+          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Model.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -555,6 +585,18 @@
             </Principal>
             <Dependent Role="Phone">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Color_Phone">
+          <End Type="Model.Phone" Role="Phone" Multiplicity="1" />
+          <End Type="Model.Color" Role="Color" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phone">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Color">
+              <PropertyRef Name="PhoneId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -608,6 +650,8 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="Model.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
@@ -644,6 +688,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="Model.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="PhoneId" ColumnName="PhoneId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Phones">
             <EntityTypeMapping TypeName="Model.Phone">
               <MappingFragment StoreEntitySet="Phone">
@@ -653,7 +706,6 @@
                 <ScalarProperty Name="Platform" ColumnName="Platform" />
                 <ScalarProperty Name="RAM" ColumnName="RAM" />
                 <ScalarProperty Name="ScreenResolution" ColumnName="ScreenResolution" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Capacity" ColumnName="Capacity" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -670,6 +722,17 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
