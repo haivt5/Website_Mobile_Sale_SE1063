@@ -8,7 +8,7 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
 {
     public class ShoppingCartCheckoutViewModel
     {
-        public List<CartDetail> CartDetails { get; set; }
+        public List<CartDetailViewModel> CartDetails { get; set; }
         public decimal Total { get; set; }
     }
 
