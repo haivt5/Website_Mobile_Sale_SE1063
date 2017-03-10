@@ -12,6 +12,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         List<AspNetUser> GetAll();
         List<AspNetRole> GetRoleById(string id);
         string GetIdByEmail(string email);
+        AspNetUser GetByEmail(string email);
     }
 
     public class AspNetUserService : IAspNetUserService
@@ -28,8 +29,17 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             return this.entities.AspNetUsers.AsEnumerable().ToList();
         }
 
+        public AspNetUser GetByEmail(string email)
+        {
+            if (email == null || email == "")
+                return null;
+            return this.entities.AspNetUsers.SingleOrDefault(q => q.Email == email);
+        }
+
         public string GetIdByEmail(string email)
         {
+            if (email == null || email == "")
+                return "Anonymous";
             return this.entities.AspNetUsers.SingleOrDefault(q => q.Email == email).Id;
         }
 

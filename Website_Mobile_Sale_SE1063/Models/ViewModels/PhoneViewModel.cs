@@ -18,6 +18,8 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
         public int Quantity{ get; set; }
         public string Image{ get; set; }
         public decimal Price{ get; set; }
+        public int MyProperty { get; set; }
+        public string Description { get; set; }
 
         //public CategoryViewModel Category{ get; set; }
     }

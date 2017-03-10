@@ -19,6 +19,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         int Update(int cartId, int phoneId, int quantity);
         bool Remove(int cartId, int phoneId);
         bool RemoveCart(int cartId);
+        bool Checkout(int cartId, string email);
     }
 
     public class ShoppingCartService : IShoppingCartService
@@ -88,6 +89,9 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
                 c.Total = phone.Price * quantity;
                 cartDetail = this.Entities.CartDetails.Add(c);
 
+                ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+                cart.Quantity += c.Quantity.Value;
+                cart.Total += c.Total.Value;
             }
             try
             {
@@ -102,13 +106,19 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
 
         public int Update(int cartId, int phoneId, int quantity)
         {
-            IPhoneService phoneService = new PhoneService();
-            PhoneViewModel phone = phoneService.GetById(phoneId);
+            ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
             CartDetail cartDetail = this.Entities.CartDetails
                 .SingleOrDefault<CartDetail>(q => q.CartId == cartId && q.PhoneId == phoneId);
+
+            cart.Quantity = cart.Quantity - cartDetail.Quantity.Value + quantity;
+            cart.Total -= cartDetail.Total.Value;
+
+            IPhoneService phoneService = new PhoneService();
+            PhoneViewModel phone = phoneService.GetById(phoneId);
             cartDetail.Quantity = quantity;
             cartDetail.Total = phone.Price * quantity;
 
+            cart.Total += cartDetail.Total.Value;
             try
             {
                 this.Entities.SaveChanges();
@@ -122,11 +132,14 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
 
         public bool Remove(int cartId, int phoneId)
         {
+            ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
             CartDetail cartDetail = this.Entities.CartDetails
                 .SingleOrDefault<CartDetail>(q => q.CartId == cartId && q.PhoneId == phoneId);
             try
             {
                 CartDetail removedCart = this.Entities.CartDetails.Remove(cartDetail);
+                cart.Quantity -= cartDetail.Quantity.Value;
+                cart.Total -= cartDetail.Total.Value;
                 this.Entities.SaveChanges();
                 return removedCart != null;
             }
@@ -150,5 +163,27 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
                 throw e;
             }
         }
+
+        public bool Checkout(int cartId, string email)
+        {
+            ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+            IAspNetUserService userService = new AspNetUserService();
+            cart.AccountID = userService.GetIdByEmail(email);
+            cart.Status = "checkout";
+            try
+            {
+                this.Entities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+
+
+
     }
 }
