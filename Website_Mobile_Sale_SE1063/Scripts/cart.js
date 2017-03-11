@@ -41,7 +41,6 @@ function Cart(userId) {
     //}
 
     this.Add = function (PhoneId) {
-        debugger
         var id = this.Id;
         $.ajax({
             url: '/ShoppingCart/Add',
@@ -50,6 +49,29 @@ function Cart(userId) {
                 cartId: id,
                 phoneId: PhoneId,
                 quantity: 1,
+            },
+            success: function (result) {
+                if (result.Success == true) {
+                    alert('Add successful');
+                } else {
+                    alert(result.Error);
+                }
+            },
+            error: function () {
+                alert('No network connection');
+            }
+        });
+    }
+
+    this.AddMore = function (phoneId, quantity) {
+        var id = this.Id;
+        $.ajax({
+            url: '/ShoppingCart/Add',
+            type: 'POST',
+            data: {
+                cartId: id,
+                phoneId: phoneId,
+                quantity: quantity,
             },
             success: function (result) {
                 if (result.Success == true) {

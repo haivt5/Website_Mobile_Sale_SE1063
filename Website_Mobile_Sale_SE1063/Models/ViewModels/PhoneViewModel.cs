@@ -21,6 +21,6 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
         public int MyProperty { get; set; }
         public string Description { get; set; }
 
-        //public CategoryViewModel Category{ get; set; }
+        public CategoryViewModel CategoryModel{ get; set; }
     }
 }

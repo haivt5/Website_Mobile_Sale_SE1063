@@ -358,6 +358,7 @@
                 for (var i = 0; i < result.length; i++) {
                     s += '<div class="col-sm-3"> ' +
                             '    <div class="product-image-wrapper">' +
+                            '       <a href="@Url.Action("PhoneDetail", "Phone")?id=' + result[i].Phone.Id + '">' +
                             '        <div class="single-products">' +
                             '            <div class="productinfo text-center">' +
                             '                <img src="' + result[i].Phone.Image + '" alt="" height="200px"/>' +
@@ -366,6 +367,7 @@
                             '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Phone.Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
                             '            </div>' +
                             '        </div>' +
+                            '       </a>' +
                             '    </div>' +
                             '</div>';
                 }
@@ -389,14 +391,16 @@
                 for (var i = 0; i < result.length; i++) {
                     s += '<div class="col-sm-3"> ' +
                             '    <div class="product-image-wrapper">' +
+                            '       <a href="@Url.Action("PhoneDetail", "Phone")?id=' + result[i].Id + '">' +
                             '        <div class="single-products">' +
                             '            <div class="productinfo text-center">' +
-                            '                <img src="' + result[i].Image + '" alt="" height="200px" />' +
+                            '                <img src="' + result[i].Image + '" alt="" height="200px"/>' +
                             '                <h2>' + result[i].Price + '</h2>' +
                             '                <p>' + result[i].Name + '</p>' +
                             '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
                             '            </div>' +
                             '        </div>' +
+                            '       </a>' +
                             '    </div>' +
                             '</div>';
                 }

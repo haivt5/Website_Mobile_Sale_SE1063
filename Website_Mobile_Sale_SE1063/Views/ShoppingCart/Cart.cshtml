@@ -141,14 +141,14 @@
         for (var i = 0; i < data.CartDetails.length; i++) {
             s += '<tr>' +
                         '    <td class="cart_product">' +
-                        '        <a href=""><img src="' + data.CartDetails[i].Phone.Image +'" alt=""></a>' +
+                        '        <a href=""><img src="' + data.CartDetails[i].PhoneModel.Image +'" alt=""></a>' +
                         '    </td>' +
                         '    <td class="cart_description">' +
-                        '        <h4><a href="">' + data.CartDetails[i].Phone.Name + '</a></h4>' +
-                        '        <p>' + data.CartDetails[i].Phone.Description + '</p>' +
+                        '        <h4><a href="">' + data.CartDetails[i].PhoneModel.Name + '</a></h4>' +
+                        '        <p>' + data.CartDetails[i].PhoneModel.Description + '</p>' +
                         '    </td>' +
                         '    <td class="cart_price">' +
-                        '        <p>' + data.CartDetails[i].Phone.Price + '</p>' +
+                        '        <p>' + data.CartDetails[i].PhoneModel.Price + '</p>' +
                         '    </td>' +
                         '    <td class="cart_quantity">' +
                         '        <div class="cart_quantity_button">' +
@@ -162,7 +162,7 @@
                         '    </td>' +
                         '    <td class="cart_delete">' +
                         '        <a class="cart_quantity_delete"><i class="fa fa-times"></i></a>' +
-                        '        <input type="hidden" value="' + data.CartDetails[i].Phone.Id + '" id="phone-id"/>' +
+                        '        <input type="hidden" value="' + data.CartDetails[i].PhoneModel.Id + '" id="phone-id"/>' +
                         '    </td>' +
                         '</tr>';
         }
