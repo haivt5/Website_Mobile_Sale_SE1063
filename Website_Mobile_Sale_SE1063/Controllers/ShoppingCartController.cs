@@ -224,6 +224,40 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         }
 
 
+        [HttpPost]
+        public JsonResult Complete(int cartId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                IShoppingCartService service = new ShoppingCartService();
+                try
+                {
+                    IAspNetUserService userService = new AspNetUserService();
+                    string userId = MapperService<AspNetUser, AspNetUserViewModel>
+                        .Map(userService.GetByEmail(User.Identity.Name), new AspNetUserViewModel()).Id;
+                    bool result = service.CompleteCart(cartId, userId);
+                    return Json(new {
+                        Success = true,
+                    });
+                }
+                catch (Exception e)
+                {
+                    return Json(new {
+                        Success = false,
+                        Error = e.Message,
+                    });
+                    throw;
+                }
+
+            } else
+            {
+                return Json(new {
+                    Success = false,
+                    Error = "Please log in before complete cart",
+                });
+            }
+        }
+
         
 
     }

@@ -13,28 +13,6 @@
             </ol>
         </div><!--/breadcrums-->
 
-        <div class="step-one">
-            <h2 class="heading">Step1</h2>
-        </div>
-        <div class="checkout-options">
-            <h3>New User</h3>
-            <p>Checkout options</p>
-            <ul class="nav">
-                <li>
-                    <label><input type="checkbox"> Register Account</label>
-                </li>
-                <li>
-                    <label><input type="checkbox"> Guest Checkout</label>
-                </li>
-                <li>
-                    <a href=""><i class="fa fa-times"></i>Cancel</a>
-                </li>
-            </ul>
-        </div><!--/checkout-options-->
-
-        <div class="register-req">
-            <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-        </div><!--/register-req-->
 
         <div class="shopper-informations">
             <div class="row">
@@ -138,7 +116,32 @@
         </div>
     </div>
 </section> <!--/#cart_items-->
+<script src="~/Scripts/cart.js"></script>
 <script>
+    $(document).ready(function () {
+        var cart = new Cart();
+        cart.Initialize();
+        $('#btnContinue').click(function () {
+            $.ajax({
+                url: '@Url.Action("Complete", "ShoppingCart")',
+                type: 'POST',
+                data: {
+                    cartId: cart.Id
+                },
+                success: function (result) {
+                    if (result.Success == true) {
+                        alert('Complete successfully');
+                        localStorage.removeItem("mobile_cart");
+                    } else {
+                        alert(result.Error);
+                    }
+                },
+                error: function () {
+                    alert('No network connection');
+                }
+            });
+        });
+    });
 </script>
 
 

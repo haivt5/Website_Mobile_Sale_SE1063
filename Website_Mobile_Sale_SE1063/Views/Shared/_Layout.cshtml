@@ -59,7 +59,7 @@
                                             <li>
                                                 @Html.ActionLink("Hello " + User.Identity.Name , "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                                             </li>
-                                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                            <li><a href="javascript:localStorage.removeItem(''mobile_cart');document.getElementById('logoutForm').submit()">Log off</a></li>
                                     }
                                 }
                                 else
@@ -592,7 +592,7 @@
                     s += '<div class="panel panel-default">' +
                                 '<div class="panel-heading">' +
                                 '    <h4 class="panel-title">' +
-                                '        <a data-toggle="collapse" data-parent="#accordian" href="#' + result[i].Name + '">' +
+                                '        <a href="/Phone/PhoneList?categoryId=' + result[i].Id + '" >' +
                                 '            <span class="badge pull-right"><i class="fa fa-plus"></i></span>' +
                                                 result[i].Name +
                                 '        </a>' +

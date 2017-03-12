@@ -20,6 +20,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         bool Remove(int cartId, int phoneId);
         bool RemoveCart(int cartId);
         bool Checkout(int cartId, string email);
+        bool CompleteCart(int cartId, string userId);
     }
 
     public class ShoppingCartService : IShoppingCartService
@@ -181,9 +182,21 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             }
         }
 
-
-
-
-
+        public bool CompleteCart(int cartId, string userId)
+        {
+            try
+            {
+                ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+                cart.Status = "Complete";
+                cart.AccountID = userId;
+                this.Entities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
+        }
     }
 }
