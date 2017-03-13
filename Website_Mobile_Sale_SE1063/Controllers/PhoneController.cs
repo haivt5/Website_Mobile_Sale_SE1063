@@ -26,13 +26,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             return View(model);
         }
 
-        public ActionResult PhoneDetail(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
-
-        public ActionResult Phone(int id)
+        public ActionResult PhoneDetail(int id)
         {
             IPhoneService service = new PhoneService();
             PhoneViewModel model = service.GetById(id);

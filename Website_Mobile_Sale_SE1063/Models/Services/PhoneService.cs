@@ -45,8 +45,8 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         public PhoneViewModel GetById(int id)
         {
             Phone product = this.entites.Phones.SingleOrDefault<Phone>(q => q.Id == id);
-            Mapper.Initialize(c => c.CreateMap<Phone, PhoneViewModel>());
-            PhoneViewModel model = Mapper.Map<PhoneViewModel>(product);
+            PhoneViewModel model = MapperService<Phone, PhoneViewModel>.Map(product, new PhoneViewModel());
+            model.CategoryModel = MapperService<Category, CategoryViewModel>.Map(product.Category, new CategoryViewModel());
             return model;
         }
 

@@ -263,6 +263,7 @@
     <Compile Include="Models\Services\AspNetUserService.cs" />
     <Compile Include="Models\Services\CartDetailService.cs" />
     <Compile Include="Models\Services\CategoryService.cs" />
+    <Compile Include="Models\Services\MapperService.cs" />
     <Compile Include="Models\Services\PhoneService.cs" />
     <Compile Include="Models\Services\ShoppingCartService.cs" />
     <Compile Include="Models\ViewModels\AccountInfoViewModel.cs" />
@@ -274,6 +275,7 @@
     <Compile Include="Models\ViewModels\RoleViewModel.cs" />
     <Compile Include="Models\ViewModels\ShoppingCartCheckoutViewModel.cs" />
     <Compile Include="Models\ViewModels\ShoppingCartCreateViewModel.cs" />
+    <Compile Include="Models\ViewModels\ShoppingCartDetailViewModel.cs" />
     <Compile Include="Models\ViewModels\ShoppingCartViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -466,6 +468,7 @@
     <Content Include="Views\Phone\PhoneDetail.cshtml" />
     <Content Include="Views\CartDetail\Checkout.cshtml" />
     <Content Include="Views\Shared\_LayoutWithoutCategory.cshtml" />
+    <Content Include="Views\ShoppingCart\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

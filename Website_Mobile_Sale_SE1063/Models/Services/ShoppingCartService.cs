@@ -15,10 +15,12 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         ShoppingCart GetById(int id);
         List<ShoppingCartViewModel> GetByAccountId(string accountId);
         int Create(ShoppingCartCreateViewModel model);
-        int Add(int phoneId, int quantity, int cartId);
-        int Update(int phoneId, int quantity, int cartId);
-        bool Remove(int phoneId, int cartId);
+        int Add(int cartId, int phoneId, int quantity);
+        int Update(int cartId, int phoneId, int quantity);
+        bool Remove(int cartId, int phoneId);
         bool RemoveCart(int cartId);
+        bool Checkout(int cartId, string email);
+        bool CompleteCart(int cartId, string userId);
     }
 
     public class ShoppingCartService : IShoppingCartService
@@ -51,9 +53,13 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         {
             try
             {
-                Mapper.Initialize(c => c.CreateMap<ShoppingCartCreateViewModel, ShoppingCart>());
-                ShoppingCart cart = Mapper.Map<ShoppingCart>(model);
-                var shoppingCart = this.Entities.ShoppingCarts.Add(cart);
+                var shoppingCart = new ShoppingCart();
+                shoppingCart.AccountID = model.AccountID;
+                shoppingCart.DateCreated = DateTime.Now;
+                shoppingCart.Quantity = model.Quantity;
+                shoppingCart.Status = model.Status;
+                shoppingCart.Total = model.Total;
+                shoppingCart = this.Entities.ShoppingCarts.Add(shoppingCart);
                 this.Entities.SaveChanges();
                 return shoppingCart.Id;
             }
@@ -65,19 +71,31 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
 
 
 
-        public int Add(int phoneId, int quantity, int cartId)
+        public int Add(int cartId, int phoneId, int quantity)
         {
+            CartDetail cartDetail = this.Entities.CartDetails.FirstOrDefault(q => q.CartId == cartId && q.PhoneId == phoneId);
             IPhoneService phoneService = new PhoneService();
             PhoneViewModel phone = phoneService.GetById(phoneId);
-            CartDetail cartDetail = new CartDetail();
-            cartDetail.CartId = cartId;
-            cartDetail.PhoneId = phoneId;
-            cartDetail.Quantity = quantity;
-            cartDetail.Total = phone.Price * quantity;
+            if (cartDetail != null)
+            {
+                cartDetail.Quantity += quantity;
+                cartDetail.Total = phone.Price * cartDetail.Quantity;
+            }
+            else
+            {
+                CartDetail c = new CartDetail();
+                c.CartId = cartId;
+                c.PhoneId = phoneId;
+                c.Quantity = quantity;
+                c.Total = phone.Price * quantity;
+                cartDetail = this.Entities.CartDetails.Add(c);
 
+                ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+                cart.Quantity += c.Quantity.Value;
+                cart.Total += c.Total.Value;
+            }
             try
             {
-                cartDetail = this.Entities.CartDetails.Add(cartDetail);
                 this.Entities.SaveChanges();
                 return cartDetail.Id;
             }
@@ -87,15 +105,21 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             }
         }
 
-        public int Update(int phoneId, int quantity, int cartId)
+        public int Update(int cartId, int phoneId, int quantity)
         {
-            IPhoneService phoneService = new PhoneService();
-            PhoneViewModel phone = phoneService.GetById(phoneId);
+            ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
             CartDetail cartDetail = this.Entities.CartDetails
                 .SingleOrDefault<CartDetail>(q => q.CartId == cartId && q.PhoneId == phoneId);
+
+            cart.Quantity = cart.Quantity - cartDetail.Quantity.Value + quantity;
+            cart.Total -= cartDetail.Total.Value;
+
+            IPhoneService phoneService = new PhoneService();
+            PhoneViewModel phone = phoneService.GetById(phoneId);
             cartDetail.Quantity = quantity;
             cartDetail.Total = phone.Price * quantity;
 
+            cart.Total += cartDetail.Total.Value;
             try
             {
                 this.Entities.SaveChanges();
@@ -107,13 +131,16 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             }
         }
 
-        public bool Remove(int phoneId, int cartId)
+        public bool Remove(int cartId, int phoneId)
         {
+            ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
             CartDetail cartDetail = this.Entities.CartDetails
                 .SingleOrDefault<CartDetail>(q => q.CartId == cartId && q.PhoneId == phoneId);
             try
             {
                 CartDetail removedCart = this.Entities.CartDetails.Remove(cartDetail);
+                cart.Quantity -= cartDetail.Quantity.Value;
+                cart.Total -= cartDetail.Total.Value;
                 this.Entities.SaveChanges();
                 return removedCart != null;
             }
@@ -136,6 +163,40 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             {
                 throw e;
             }
+        }
+
+        public bool Checkout(int cartId, string email)
+        {
+            ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+            IAspNetUserService userService = new AspNetUserService();
+            cart.AccountID = userService.GetIdByEmail(email);
+            cart.Status = "checkout";
+            try
+            {
+                this.Entities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public bool CompleteCart(int cartId, string userId)
+        {
+            try
+            {
+                ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+                cart.Status = "Complete";
+                cart.AccountID = userId;
+                this.Entities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
         }
     }
 }

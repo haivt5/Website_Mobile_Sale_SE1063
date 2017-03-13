@@ -1,4 +1,4 @@
-﻿@model Website_Mobile_Sale_SE1063.Models.ViewModels.ShoppingCartCheckoutViewModel
+﻿@*@model Website_Mobile_Sale_SE1063.Models.ViewModels.ShoppingCartCheckoutViewModel*@
 @{
     Layout = "~/Views/Shared/_LayoutWithoutCategory.cshtml";
 }
@@ -21,40 +21,10 @@
                         <td class="price">Price</td>
                         <td class="quantity">Quantity</td>
                         <td class="total">Total</td>
-                        <td></td>
+                        <td class="cart_delete"></td>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in Model.CartDetails)
-                    {
-                        
-                        <tr>
-                            <td class="cart_product">
-                                <a href=""><img src="@item.Phone.Image" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="">@item.Phone.Name</a></h4>
-                                <p>@item.Phone.Description</p>
-                            </td>
-                            <td class="cart_price">
-                                <p>@item.Phone.Price</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="@item.Quantity" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
-                                </div>
-                            </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">@item.Total</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>
-
-                    }
+                <tbody id="cart-details">
 
                 </tbody>
             </table>
@@ -124,15 +94,15 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="total_area">
-                    <ul>
+                <div class="total_area" id="total-area">
+                    @*<ul>
                         <li>Cart Sub Total <span>@Model.Total</span></li>
                         <li>Eco Tax <span>Free</span></li>
                         <li>Shipping Cost <span>Free</span></li>
                         <li>Total <span>@Model.Total</span></li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
-                    <a class="btn btn-default check_out" href="">Check Out</a>
+                    <a class="btn btn-default check_out" href="">Check Out</a>*@
                 </div>
             </div>
         </div>
@@ -143,6 +113,137 @@
 <script>
     var cart;
     $(document).ready(function () {
-        cart = new Cart();
+        cart = new Cart('@(User.Identity.IsAuthenticated ? ViewBag.UserId : "Anonymous")');
+        cart.Initialize();
+
+        loadCart();
     });
+
+    function loadCart() {
+        $.ajax({
+            url: '@Url.Action("GetCart", "ShoppingCart")',
+            type: 'POST',
+            data: {
+                cartId: cart.Id,
+                userId: cart.UserId,
+            },
+            success: function (data) {
+                loadCartToHTML(data);
+            },
+            error: function () {
+                alert('No network connection!');
+            }
+        });
+    }
+
+    function loadCartToHTML(data) {
+        var s = "";
+        for (var i = 0; i < data.CartDetails.length; i++) {
+            s += '<tr>' +
+                        '    <td class="cart_product">' +
+                        '        <a href=""><img src="' + data.CartDetails[i].PhoneModel.Image +'" alt=""></a>' +
+                        '    </td>' +
+                        '    <td class="cart_description">' +
+                        '        <h4><a href="">' + data.CartDetails[i].PhoneModel.Name + '</a></h4>' +
+                        '        <p>' + data.CartDetails[i].PhoneModel.Description + '</p>' +
+                        '    </td>' +
+                        '    <td class="cart_price">' +
+                        '        <p>' + data.CartDetails[i].PhoneModel.Price + '</p>' +
+                        '    </td>' +
+                        '    <td class="cart_quantity">' +
+                        '        <div class="cart_quantity_button">' +
+                        '            <a class="cart_quantity_up" id="quantity-up" style="cursor: pointer"> + </a>' +
+                        '            <input class="cart_quantity_input" type="text" name="quantity" value="' + data.CartDetails[i].Quantity + '" autocomplete="off" size="2" id="phone-quantity">' +
+                        '            <a class="cart_quantity_down" id="quantity-down" style="cursor: pointer"> - </a>' +
+                        '        </div>' +
+                        '    </td>' +
+                        '    <td class="cart_total">' +
+                        '        <p class="cart_total_price">' + data.CartDetails[i].Total + '</p>' +
+                        '    </td>' +
+                        '    <td class="cart_delete">' +
+                        '        <a class="cart_quantity_delete"><i class="fa fa-times"></i></a>' +
+                        '        <input type="hidden" value="' + data.CartDetails[i].PhoneModel.Id + '" id="phone-id"/>' +
+                        '    </td>' +
+                        '</tr>';
+        }
+        $('#cart-details').html(s);
+
+        var s2 = '<ul>'+
+                    '    <li>Cart Sub Total <span>' + data.Total + '</span></li>' +
+                    '    <li>Eco Tax <span>Free</span></li>' +
+                    '    <li>Shipping Cost <span>Free</span></li>' +
+                    '    <li>Total <span>' + data.Total + '</span></li>' +
+                    '</ul>' +
+                    '<a class="btn btn-default update" id="update">Update</a>' +
+                    '<a class="btn btn-default check_out" id="btn-checkout" href="/ShoppingCart/Checkout?cartId=' + cart.Id + '">Check Out</a>';
+
+        $('#total-area').html(s2);
+
+        @*$('#btn-checkout').click(function () {
+            $.ajax({
+                url: '@Url.Action("Checkout", "ShoppingCart")',
+                type: 'POST',
+                data: {
+                    cartId: cart.Id
+                },
+                success: function (result) {
+                    if (result.Success == true) {
+                        alert('Checkout successfully');
+                        localStorage.removeItem("mobile_cart");
+                    } else {
+                        alert(result.Error);
+                    }
+                },
+                error: function () {
+                    alert('No network connection');
+                }
+            });
+        });*@
+
+        $('a[id="quantity-up"]').each(function () {
+            $(this).click(function () {
+                var val = $(this).next().val();
+                $(this).next().val(++val);
+            });
+        });
+        $('a[id="quantity-down"]').each(function () {
+            $(this).click(function () {
+                var val = $(this).prev().val();
+                $(this).prev().val((val == 1 ? val : --val));
+            });
+        });
+
+        $('#update').click(function () {
+
+            var phoneId = [];
+            var quantity = [];
+
+            $('input[id="phone-quantity"]').each(function () {
+                quantity.push($(this).val());
+            });
+            $('input[id="phone-id"]').each(function () {
+                phoneId.push($(this).val());
+            });
+            $.ajax({
+                url: '@Url.Action("UpdateEntireCart", "ShoppingCart")',
+                type: 'POST',
+                data: {
+                    phoneId: phoneId,
+                    quantity: quantity,
+                    cartId: cart.Id,
+                },
+                success: function (data) {
+                    loadCartToHTML(data);
+                },
+                error: function () {
+                    alert('No network connection');
+                }
+            });
+        });
+    }
+
+    
+
+
+
 </script>

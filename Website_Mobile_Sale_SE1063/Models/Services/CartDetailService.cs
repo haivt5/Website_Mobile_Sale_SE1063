@@ -14,6 +14,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         List<CartDetail> GetAll();
         CartDetail GetById(int id);
         List<CartDetail> GetByCartId(int cartId);
+        List<CartDetail> GetByUserId(string userId);
     }
 
     public class CartDetailService : ICartDetailService
@@ -38,6 +39,13 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         public List<CartDetail> GetByCartId(int cartId)
         {
             List<CartDetail> orderDetails = this.entities.CartDetails.Where(c => c.ShoppingCart.Id == cartId).ToList() ;
+            return orderDetails;
+        }
+
+        public List<CartDetail> GetByUserId(string userId)
+        {
+            List<CartDetail> orderDetails = 
+                this.entities.CartDetails.Where(c => c.ShoppingCart.AccountID == userId).ToList();
             return orderDetails;
         }
     }

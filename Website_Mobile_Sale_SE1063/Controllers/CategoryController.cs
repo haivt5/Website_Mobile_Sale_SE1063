@@ -28,7 +28,12 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             List<CategoryViewModel> model = new List<CategoryViewModel>();
             foreach (var item in categories)
             {
-                model.Add(Mapper.Map<CategoryViewModel>(item));
+                CategoryViewModel category = new CategoryViewModel();
+                category.Description = item.Description;
+                category.Id = item.Id;
+                category.Name = item.Name;
+                category.ParentId = item.ParentId;
+                model.Add(category);
             }
             return Json(model);
         }
