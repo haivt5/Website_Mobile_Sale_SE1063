@@ -18,10 +18,10 @@
 
 <section>
     <div class="container">
-        @if (User.IsInRole("admin"))
-        {
-            <a href="@Url.Action("ManagePhone", "Phone")"><button class="btn btn-primary">Quản lý phone</button></a>
-        }
+        @*@if (User.IsInRole("admin"))*@
+        
+            <a href="@Url.Action("AdminPhoneList", "Admin")"><button class="btn btn-primary">Quản lý phone</button></a>
+        
 
 
         <div class="col-sm-9 padding-right">

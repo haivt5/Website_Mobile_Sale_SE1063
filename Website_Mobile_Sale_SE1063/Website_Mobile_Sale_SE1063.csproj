@@ -203,6 +203,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountInfoController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartDetailController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -281,6 +282,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.bootstrap.min.css" />
+    <Content Include="Content\admin.dataTables.bootstrap.css" />
+    <Content Include="Content\admin.dataTables.responsive.css" />
+    <Content Include="Content\admin.font-awesome.min.css" />
+    <Content Include="Content\admin.metisMenu.min.css" />
+    <Content Include="Content\admin.sb-admin-2.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -388,6 +395,13 @@
       <DependentUpon>WebEntity.edmx</DependentUpon>
       <LastGenOutput>WebEntity.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\admin.bootstrap.min.js" />
+    <Content Include="Scripts\admin.dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\admin.dataTables.responsive.js" />
+    <Content Include="Scripts\admin.jquery.dataTables.min.js" />
+    <Content Include="Scripts\admin.jquery.min.js" />
+    <Content Include="Scripts\admin.metisMenu.min.js" />
+    <Content Include="Scripts\admin.sb-admin-2.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -469,6 +483,9 @@
     <Content Include="Views\CartDetail\Checkout.cshtml" />
     <Content Include="Views\Shared\_LayoutWithoutCategory.cshtml" />
     <Content Include="Views\ShoppingCart\Checkout.cshtml" />
+    <Content Include="Views\Admin\AdminAddNewPhone.cshtml" />
+    <Content Include="Views\Admin\AdminPhoneList.cshtml" />
+    <Content Include="Views\Shared\_Layout_Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
