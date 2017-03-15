@@ -18,7 +18,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         {
             int pageNumber = (page ?? 1);
             int pageSize = 10;
-            return View(db.Phones.ToList().OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
+            return View(db.Phones.ToList().OrderBy(n => n.Category.Name).ToPagedList(pageNumber, pageSize));
         }
 
         //public ActionResult AdminPhoneList(int categoryId)
