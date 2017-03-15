@@ -9,31 +9,59 @@ using AutoMapper;
 namespace Website_Mobile_Sale_SE1063.Models.Services
 {
     
-
-
-    public class PhoneService
+    public interface IPhoneService
     {
-        private WebEntitiyManager entites;
+        List<PhoneViewModel> GetAll();
+        PhoneViewModel GetById(int id);
+        List<Phone> GetByCategoryId(int categoryId);
+        List<Phone> GetAllGroupByCategory();
+        List<PhoneViewModel> GetNewPhones();
+    }
 
-        public PhoneService()
-        {
-            this.entites = new WebEntitiyManager();
-        }
+    public class PhoneService : IPhoneService
+    {
+        private WebEntitiyManager entites = new WebEntitiyManager();
 
         public List<PhoneViewModel> GetAll()
         {
             List<Phone> products = this.entites.Phones.AsQueryable().ToList();
             Mapper.Initialize(c => c.CreateMap<List<Phone>, List<PhoneViewModel>>());
-            return Mapper.Map<List<PhoneViewModel>>(products);
+            List<PhoneViewModel> model = Mapper.Map<List<PhoneViewModel>>(products);
+            return model;
+        }
+
+        public List<Phone> GetAllGroupByCategory()
+        {
+            var phones = this.entites.Phones.AsEnumerable().OrderBy(q => q.CategoryID).ToList();
+            return phones;
+        }
+
+        public List<Phone> GetByCategoryId(int categoryId)
+        {
+            List<Phone> products = this.entites.Phones.Where(q => q.CategoryID == categoryId).AsEnumerable().ToList();
+            return products;
         }
 
         public PhoneViewModel GetById(int id)
         {
             Phone product = this.entites.Phones.SingleOrDefault<Phone>(q => q.Id == id);
+            PhoneViewModel model = MapperService<Phone, PhoneViewModel>.Map(product, new PhoneViewModel());
+            model.CategoryModel = MapperService<Category, CategoryViewModel>.Map(product.Category, new CategoryViewModel());
+            return model;
+        }
+
+        public List<PhoneViewModel> GetNewPhones()
+        {
+            var phones = this.entites.Phones.OrderByDescending(q => q.Id).ToList();
             Mapper.Initialize(c => c.CreateMap<Phone, PhoneViewModel>());
-            return Mapper.Map<PhoneViewModel>(product);
+            List<PhoneViewModel> model = new List<PhoneViewModel>();
+            foreach (var item in phones)
+            {
+                model.Add(Mapper.Map<PhoneViewModel>(item));
+            }
+            return model;
         }
     }
-
+    
 
 }

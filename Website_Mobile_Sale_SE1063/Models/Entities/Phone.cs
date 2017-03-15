@@ -18,21 +18,25 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         public Phone()
         {
             this.CartDetails = new HashSet<CartDetail>();
+            this.Colors = new HashSet<Color>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
         public int CategoryID { get; set; }
         public float Capacity { get; set; }
-        public string Color { get; set; }
         public string ScreenResolution { get; set; }
         public Nullable<int> RAM { get; set; }
         public string Platform { get; set; }
         public int Quantity { get; set; }
         public string Image { get; set; }
+        public decimal Price { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartDetail> CartDetails { get; set; }
         public virtual Category Category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Color> Colors { get; set; }
     }
 }

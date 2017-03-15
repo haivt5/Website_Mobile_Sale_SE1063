@@ -18,13 +18,14 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44341</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +84,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -90,12 +92,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -136,6 +135,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -204,6 +204,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountInfoController.cs" />
     <Compile Include="Controllers\CartDetailController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PhoneController.cs" />
@@ -233,10 +234,10 @@
     <Compile Include="Models\Entities\Category.cs">
       <DependentUpon>WebEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Phone.cs">
+    <Compile Include="Models\Entities\Color.cs">
       <DependentUpon>WebEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Role.cs">
+    <Compile Include="Models\Entities\Phone.cs">
       <DependentUpon>WebEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\ShoppingCart.cs">
@@ -259,17 +260,22 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Services\AccountInfoService.cs" />
+    <Compile Include="Models\Services\AspNetUserService.cs" />
+    <Compile Include="Models\Services\CartDetailService.cs" />
     <Compile Include="Models\Services\CategoryService.cs" />
-    <Compile Include="Models\Services\OrderDetailService.cs" />
-    <Compile Include="Models\Services\OrderService.cs" />
+    <Compile Include="Models\Services\MapperService.cs" />
     <Compile Include="Models\Services\PhoneService.cs" />
+    <Compile Include="Models\Services\ShoppingCartService.cs" />
     <Compile Include="Models\ViewModels\AccountInfoViewModel.cs" />
+    <Compile Include="Models\ViewModels\AspNetRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\AspNetUserViewModel.cs" />
     <Compile Include="Models\ViewModels\CartDetailViewModel.cs" />
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\PhoneViewModel.cs" />
     <Compile Include="Models\ViewModels\RoleViewModel.cs" />
+    <Compile Include="Models\ViewModels\ShoppingCartCheckoutViewModel.cs" />
+    <Compile Include="Models\ViewModels\ShoppingCartCreateViewModel.cs" />
+    <Compile Include="Models\ViewModels\ShoppingCartDetailViewModel.cs" />
     <Compile Include="Models\ViewModels\ShoppingCartViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -323,6 +329,33 @@
     <Content Include="Content\images\home\sale.png" />
     <Content Include="Content\images\home\searchicon.png" />
     <Content Include="Content\images\home\shipping.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone2g.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone3.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone3gs.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone4.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone4s.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone5.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone5c.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone5s.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6+.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s_black.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s_gold.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone6s_white.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone7+.jpg" />
+    <Content Include="Content\images\New_phone_pictures\iphone\iphone7.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\G1.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g2.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g3.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g4.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g5.jpg" />
+    <Content Include="Content\images\New_phone_pictures\LG\g6.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s1.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s2.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s3.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s4.jpg" />
+    <Content Include="Content\images\New_phone_pictures\samsung\s5.jpg" />
     <Content Include="Content\images\product-details\1.jpg" />
     <Content Include="Content\images\product-details\new.jpg" />
     <Content Include="Content\images\product-details\rating.png" />
@@ -373,6 +406,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\cart.js" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\html5shiv.js" />
@@ -392,7 +426,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -427,13 +463,17 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Phone\PhoneList.cshtml" />
+    <Content Include="Views\ShoppingCart\Cart.cshtml" />
+    <Content Include="Views\Phone\PhoneDetail.cshtml" />
+    <Content Include="Views\CartDetail\Checkout.cshtml" />
+    <Content Include="Views\Shared\_LayoutWithoutCategory.cshtml" />
+    <Content Include="Views\ShoppingCart\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccountInfo\" />
-    <Folder Include="Views\CartDetail\" />
-    <Folder Include="Views\ShoppingCart\" />
+    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -460,7 +500,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64371</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

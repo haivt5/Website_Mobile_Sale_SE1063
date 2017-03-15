@@ -1,0 +1,147 @@
+﻿@model Website_Mobile_Sale_SE1063.Models.ViewModels.ShoppingCartDetailViewModel
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_LayoutWithoutCategory.cshtml";
+}
+
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li class="active">Check out</li>
+            </ol>
+        </div><!--/breadcrums-->
+
+
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="shopper-info">
+                        <p>Shopper Information</p>
+                        <form>
+                            <input type="text" placeholder="Fullname" id="txtFullname" value="@Model.User.Name" readonly>
+                            <input type="text" placeholder="Address" id="txtAddress" value="@Model.User.Address" readonly>
+                            <input type="tel" placeholder="Phone number" id="txtPhone" value="@Model.User.PhoneNumber" readonly>
+                            <input type="email" placeholder="Email" id="txtEmail" value="@Model.User.Email" readonly>
+                        </form>
+                        @*<a class="btn btn-primary" href="">Get Quotes</a>*@
+                        <button class="btn btn-primary" href="#" id="btnContinue">Continue</button>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="order-message">
+                        <p>Shipping Order</p>
+                        <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
+                        <label><input type="checkbox"> Shipping to bill address</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="review-payment">
+            <h2>Review & Payment</h2>
+        </div>
+
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description"></td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Quantity</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.CartDetailsModel.Count; i++)
+                    {
+                        <tr>
+                            <td class="cart_product">
+                                <a href=""><img src="@Model.CartDetailsModel.ElementAt(i).PhoneModel.Image" alt=""></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="">@Model.CartDetailsModel.ElementAt(i).PhoneModel.Name</a></h4>
+                                <p>@Model.CartDetailsModel.ElementAt(i).PhoneModel.Description</p>
+                            </td>
+                            <td class="cart_price">
+                                <p>@Model.CartDetailsModel.ElementAt(i).PhoneModel.Price</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="@Model.CartDetailsModel.ElementAt(i).Quantity" autocomplete="off" size="2" readonly>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">@Model.CartDetailsModel.ElementAt(i).Total</p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2">
+                            <table class="table table-condensed total-result">
+                                <tr>
+                                    <td>Cart Sub Total</td>
+                                    <td>@Model.Total</td>
+                                </tr>
+                                <tr class="shipping-cost">
+                                    <td>Shipping Cost</td>
+                                    <td>Free</td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td><span>@Model.Total</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="payment-options">
+            <span>
+                <label><input type="checkbox"> Direct Bank Transfer</label>
+            </span>
+            <span>
+                <label><input type="checkbox"> Check Payment</label>
+            </span>
+            <span>
+                <label><input type="checkbox"> Paypal</label>
+            </span>
+        </div>
+    </div>
+</section> <!--/#cart_items-->
+<script src="~/Scripts/cart.js"></script>
+<script>
+    $(document).ready(function () {
+        var cart = new Cart();
+        cart.Initialize();
+        $('#btnContinue').click(function () {
+            $.ajax({
+                url: '@Url.Action("Complete", "ShoppingCart")',
+                type: 'POST',
+                data: {
+                    cartId: cart.Id
+                },
+                success: function (result) {
+                    if (result.Success == true) {
+                        alert('Complete successfully');
+                        localStorage.removeItem("mobile_cart");
+                    } else {
+                        alert(result.Error);
+                    }
+                },
+                error: function () {
+                    alert('No network connection');
+                }
+            });
+        });
+    });
+</script>
+
+

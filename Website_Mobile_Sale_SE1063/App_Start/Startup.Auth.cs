@@ -54,15 +54,15 @@ namespace Website_Mobile_Sale_SE1063
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "268474296920096",
+               appSecret: "6263db788be52ac4431b0bc23864e9f6");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "494620374758-k6pdrffsn2489jl6i3t73h8he9l10hjp.apps.googleusercontent.com",
+                ClientSecret = "wURwvyrRtenVgmtpM7UqsSBV"
+            });
         }
     }
 }

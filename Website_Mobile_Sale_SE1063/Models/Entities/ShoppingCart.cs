@@ -21,13 +21,13 @@ namespace Website_Mobile_Sale_SE1063.Models.Entities
         }
     
         public int Id { get; set; }
-        public int AccountID { get; set; }
+        public string AccountID { get; set; }
         public int Quantity { get; set; }
         public string Status { get; set; }
         public decimal Total { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
     
-        public virtual AccountInfo AccountInfo { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartDetail> CartDetails { get; set; }
     }

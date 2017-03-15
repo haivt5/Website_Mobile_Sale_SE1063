@@ -2,6 +2,7 @@
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutWithoutCategory.cshtml";
 }
 
 
@@ -14,15 +15,16 @@
                     <div class="login-form">
                         <!--login form-->
                         <h2>Login to your account</h2>
-                        <form action="#">
-                            <input type="email" placeholder="Email Address" />
-                            <input type="password" placeholder="Password" />
+                        @using (Html.BeginForm("LoginWithoutModel", "Account", FormMethod.Post)) {
+                            <input type="email" name="Email" placeholder="Email Address" required />
+                            <input type="password" name="Password" placeholder="Password" required />
                             <span>
-                                <input type="checkbox" class="checkbox">
+                                <input type="checkbox" id="cbxRememberMe" class="checkbox">
                                 Keep me signed in
+                                <input type="hidden" name="RememberMe" id="RememberMe"/>
                             </span>
                             <button type="submit" class="btn btn-default">Login</button>
-                        </form>
+                        }
                     </div><!--/login form-->
                 </div>
                 <div class="col-sm-1">
@@ -32,10 +34,11 @@
                     <div class="signup-form">
                         <!--sign up form-->
                         <h2>New User Signup!</h2>
-                        <form action="#">
-                            <input type="text" placeholder="Name" />
-                            <input type="email" placeholder="Email Address" />
-                            <input type="password" placeholder="Password" />
+                        <form action="@Url.Action("RegisterWithoutModel", "Account")" method="post">
+                            @*<input type="text" placeholder="Name" />*@
+                            <input type="email" placeholder="Email Address" name="Email" />
+                            <input type="password" placeholder="Password" name="Password"/>
+                            <input type="password" placeholder="Confirm password" name="PasswordConfirm" />
                             <button type="submit" class="btn btn-default">Signup</button>
                         </form>
                     </div><!--/sign up form-->
@@ -98,13 +101,27 @@
             }
         </section>
     </div>
-    <div class="col-md-4">
+    *@<div class="col-md-4">
         <section id="socialLoginForm">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
-    </div>
+    </div>@*
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }*@
+
+<script>
+
+    $(document).ready(function () {
+        
+        $('#RememberMe').val("false");
+
+        $('#cbxRememberMe').change(function () {
+            $('#RememberMe').val(this.checked);
+        });
+
+    });
+
+</script>

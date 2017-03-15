@@ -1,0 +1,87 @@
+﻿@using Website_Mobile_Sale_SE1063.Models.Entities
+@model List<Phone>
+@{
+    ViewBag.Title = "Index";
+    //Hiện danh sách các product ở đây
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<section id="advertisement">
+    <div class="container">
+        <img src="~/Content/images/shop/advertisement.jpg" alt="" />
+    </div>
+</section>*@
+
+<section>
+    <div class="container">
+        @if (User.IsInRole("admin"))
+        {
+            <a href="@Url.Action("ManagePhone", "Phone")"><button class="btn btn-primary">Quản lý phone</button></a>
+        }
+
+
+        <div class="col-sm-9 padding-right">
+            <div class="features_items">
+                <!--features_items-->
+                <h2 class="title text-center">Features Items</h2>
+
+
+
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-4">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="@item.Image" alt="" width="250" height="250" />
+
+                                <h2>@item.Price</h2>
+                                <p>@item.Name</p>
+                                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            </div>
+                            <div class="product-overlay">
+                                <div class="overlay-content">
+                                    <h2>@item.Price</h2>
+                                    <p>@item.Name</p>
+                                    <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+
+                
+                
+
+            </div><!--features_items-->
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/cart.js"></script>
+<script>
+    var cart;
+    $(document).ready(function () {
+        cart = new Cart();
+        cart.Initialize();
+
+        $('a[id="btn-add-to-cart"]').each(function () {
+            $(this).click(function () {
+                onBtnAddClick($(this));
+            });
+        });
+    });
+
+    function onBtnAddClick(element) {
+        var phoneId = element.attr('data-phone-id');
+
+        cart.Add(phoneId);
+    }
+</script>

@@ -7,13 +7,12 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
 {
     public class CartDetailViewModel
     {
-        public int Id;
-        public Nullable<int> CartId;
-        public Nullable<int> PhoneId;
-        public Nullable<int> Quantity;
-        public Nullable<decimal> Total;
+        public int Id { get; set;}
+        public int CartId { get; set;}
+        public int PhoneId { get; set;}
+        public int Quantity { get; set;}
+        public decimal Total { get; set;}
 
-        public PhoneViewModel Phone;
-        public ShoppingCartViewModel ShoppingCart;
+        public PhoneViewModel PhoneModel { get; set;}
     }
 }

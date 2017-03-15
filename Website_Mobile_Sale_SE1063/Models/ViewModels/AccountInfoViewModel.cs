@@ -8,12 +8,11 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
     public class AccountInfoViewModel
     {
         public int Id;
-        public int RoleID;
         public string Name;
         public string Address;
         public string UserId;
 
         public AspNetUserViewModel AspNetUser;
-        public RoleViewModel Role;
+        public List<AspNetRoleViewModel> AspNetRoles;
     }
 }

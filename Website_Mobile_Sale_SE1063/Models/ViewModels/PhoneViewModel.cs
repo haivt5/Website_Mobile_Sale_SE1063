@@ -7,17 +7,20 @@ namespace Website_Mobile_Sale_SE1063.Models.ViewModels
 {
     public class PhoneViewModel
     {
-        public int Id;
-        public string Name;
-        public int CategoryID;
-        public float Capacity;
-        public string Color;
-        public string ScreenResolution;
-        public Nullable<int> RAM;
-        public string Platform;
-        public int Quantity;
-        public string Image;
+        public int Id{ get; set; }
+        public string Name{ get; set; }
+        public int CategoryID{ get; set; }
+        public float Capacity{ get; set; }
+        public string Color{ get; set; }
+        public string ScreenResolution{ get; set; }
+        public Nullable<int> RAM{ get; set; }
+        public string Platform{ get; set; }
+        public int Quantity{ get; set; }
+        public string Image{ get; set; }
+        public decimal Price{ get; set; }
+        public int MyProperty { get; set; }
+        public string Description { get; set; }
 
-        public CategoryViewModel Category;
+        public CategoryViewModel CategoryModel{ get; set; }
     }
 }
