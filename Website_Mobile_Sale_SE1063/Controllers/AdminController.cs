@@ -6,16 +6,19 @@ using System.Web.Mvc;
 using Website_Mobile_Sale_SE1063.Models.Entities;
 using Website_Mobile_Sale_SE1063.Models.Services;
 using Website_Mobile_Sale_SE1063.Models.ViewModels;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
 {
     public class AdminController : Controller
     {
         WebEntitiyManager db = new WebEntitiyManager();
-        public ActionResult AdminPhoneList(string returnUrl)
+        public ActionResult AdminPhoneList(int? page)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View(db.Phones.ToList().OrderBy(n => n.Name));
+            int pageNumber = (page ?? 1);
+            int pageSize = 10;
+            return View(db.Phones.ToList().OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
         }
 
         //public ActionResult AdminPhoneList(int categoryId)
