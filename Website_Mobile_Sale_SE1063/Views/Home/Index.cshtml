@@ -362,7 +362,7 @@
                             '        <div class="single-products">' +
                             '            <div class="productinfo text-center">' +
                             '                <img src="' + result[i].Phone.Image + '" alt="" height="200px"/>' +
-                            '                <h2>' + result[i].Phone.Price + '</h2>' +
+                            '                <h2>' + toMoney(result[i].Phone.Price) + '</h2>' +
                             '                <p>' + result[i].Phone.Name + '</p>' +
                             '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Phone.Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
                             '            </div>' +
@@ -395,7 +395,7 @@
                             '        <div class="single-products">' +
                             '            <div class="productinfo text-center">' +
                             '                <img src="' + result[i].Image + '" alt="" height="200px"/>' +
-                            '                <h2>' + result[i].Price + '</h2>' +
+                            '                <h2>' + toMoney(result[i].Price) + '</h2>' +
                             '                <p>' + result[i].Name + '</p>' +
                             '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
                             '            </div>' +

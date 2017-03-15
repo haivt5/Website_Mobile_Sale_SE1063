@@ -62,7 +62,7 @@
                             <p>@Model.Description</p>
                             <img src="~/Content/images/product-details/rating.png" alt="" />
                             <span>
-                                <span>VND @Model.Price</span>
+                                <span id="price">VND @Model.Price</span>
                                 <label>Quantity:</label>
                                 <input type="text" value="1" id="quantity"/>
                                 <button type="button" class="btn btn-fefault cart" id="btn-add">
@@ -241,6 +241,11 @@
         cart.Initialize();
 
         $('#btn-add').click(onBtnAddClick);
+
+        $('span[id=price]').each(function () {
+            var string = $(this).html().substring(4, $(this).html().indexOf("."));
+            $(this).html("VND " + toMoney(string));
+        });
     });
 
     function onBtnAddClick() {

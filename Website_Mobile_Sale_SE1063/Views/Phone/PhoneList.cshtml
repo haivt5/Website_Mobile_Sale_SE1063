@@ -39,13 +39,13 @@
                             <div class="productinfo text-center">
                                 <img src="@item.Image" alt="" width="250" height="250" />
 
-                                <h2>@item.Price</h2>
+                                <h2 id="price">@item.Price</h2>
                                 <p>@item.Name</p>
                                 <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
                             <div class="product-overlay">
                                 <div class="overlay-content">
-                                    <h2>@item.Price</h2>
+                                    <h2 id="price">@item.Price</h2>
                                     <p>@item.Name</p>
                                     <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                 </div>
@@ -76,6 +76,11 @@
             $(this).click(function () {
                 onBtnAddClick($(this));
             });
+        });
+
+        $('h2[id=price]').each(function () {
+            var string = $(this).html().substring(0, $(this).html().indexOf("."));
+            $(this).html(toMoney(string) + "đ");
         });
     });
 

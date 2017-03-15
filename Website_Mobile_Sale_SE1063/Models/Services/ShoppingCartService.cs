@@ -21,6 +21,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         bool RemoveCart(int cartId);
         bool Checkout(int cartId, string email);
         bool CompleteCart(int cartId, string userId);
+        int UpdateEntireCart(int cartId, List<int> phoneId, List<int> quantity);
     }
 
     public class ShoppingCartService : IShoppingCartService
@@ -197,6 +198,28 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
                 throw e;
             }
             
+        }
+
+        public int UpdateEntireCart(int cartId, List<int> phoneId, List<int> quantity)
+        {
+            List<CartDetail> cartDetails = this.Entities.CartDetails.Where(q => q.CartId == cartId).ToList();
+            for (int i = 0; i < cartDetails.Count; i++)
+            {
+                int pos = phoneId.IndexOf(cartDetails[i].PhoneId.Value);
+                if (pos < 0)
+                {
+                    this.Entities.CartDetails.Remove(cartDetails[i]);
+                }
+                else
+                {
+                    cartDetails[i].Quantity = quantity[pos];
+                    cartDetails[i].Total = quantity[pos] * cartDetails[i].Phone.Price;
+                }
+            }
+            var cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+            cart.Total = this.Entities.CartDetails.Local.Sum(q => q.Total.Value);
+            this.Entities.SaveChanges();
+            return cartId;
         }
     }
 }

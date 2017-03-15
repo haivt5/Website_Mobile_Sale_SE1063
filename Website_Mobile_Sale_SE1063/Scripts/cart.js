@@ -225,3 +225,17 @@ function CartView(cart) {
         return s;
     }
 }
+
+function toMoney(number) {
+    var numberStr = number + "";
+    var a = Math.floor(numberStr.length / 3);
+    var b = numberStr.length % 3;
+    var amount = 0;
+    for (var i = 0; i < a; ++i) {
+        if (b + i * 3 + amount > 0) {
+            numberStr = numberStr.slice(0, b + i * 3 + amount) + "," + numberStr.slice(b + i * 3 + amount);
+            ++amount;
+        }
+    }
+    return numberStr;
+}
