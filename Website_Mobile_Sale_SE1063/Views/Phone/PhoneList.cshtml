@@ -1,5 +1,4 @@
 ﻿@using Website_Mobile_Sale_SE1063.Models.Entities
-@model List<Phone>
 @{
     ViewBag.Title = "Index";
     //Hiện danh sách các product ở đây
@@ -27,11 +26,35 @@
         <div class="col-sm-9 padding-right">
             <div class="features_items">
                 <!--features_items-->
-                <h2 class="title text-center">Features Items</h2>
 
 
 
-            @foreach (var item in Model)
+                <div class="category-tab">
+                    <!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab-increase" data-toggle="tab">Price increase</a></li>
+                            <li><a href="#tab-decrease" data-toggle="tab">Price decrease</a></li>
+                            @*<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
+                    <li><a href="#kids" data-toggle="tab">Kids</a></li>
+                    <li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>*@
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="tab-increase">
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-decrease">
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+            @*@foreach (var item in Model)
             {
                 <div class="col-sm-4">
                     <div class="product-image-wrapper">
@@ -53,8 +76,7 @@
                         </div>
                     </div>
                 </div>
-            }
-
+            }*@
 
 
 
@@ -71,6 +93,7 @@
     $(document).ready(function () {
         cart = new Cart();
         cart.Initialize();
+        loadIncrease();
 
         $('a[id="btn-add-to-cart"]').each(function () {
             $(this).click(function () {
@@ -82,6 +105,9 @@
             var string = $(this).html().substring(0, $(this).html().indexOf("."));
             $(this).html(toMoney(string) + "đ");
         });
+
+        $('a[href="#tab-increase"]').click(loadIncrease);
+        $('a[href="#tab-decrease"]').click(loadDecrease);
     });
 
     function onBtnAddClick(element) {
@@ -89,4 +115,78 @@
 
         cart.Add(phoneId);
     }
+
+    function loadIncrease() {
+        $.ajax({
+            url: '@Url.Action("GetPriceIncrease", "Phone")',
+            type: 'POST',
+            data: {
+                categoryId: '@ViewBag.CategoryId',
+            },
+            success: function (result) {
+                var s = "";
+                for (var i = 0; i < result.length; i++) {
+                    s += '<div class="col-sm-3"> ' +
+                            '    <div class="product-image-wrapper">' +
+                            '       <a href="@Url.Action("PhoneDetail", "Phone")?id=' + result[i].Id + '">' +
+                            '        <div class="single-products">' +
+                            '            <div class="productinfo text-center">' +
+                            '                <img src="' + result[i].Image + '" alt="" height="200px"/>' +
+                            '                <h2>' + toMoney(result[i].Price) + '</h2>' +
+                            '                <p>' + result[i].Name + '</p>' +
+                            '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
+                            '            </div>' +
+                            '        </div>' +
+                            '       </a>' +
+                            '    </div>' +
+                            '</div>';
+                }
+                $('#tab-increase').html(s);
+            }
+        }).done(function () {
+            $('a[id="btn-add-to-cart"]').each(function () {
+                $(this).click(function () {
+                    onBtnAddClick($(this));
+                });
+            });
+        });
+    }
+
+    function loadDecrease() {
+        $.ajax({
+            url: '@Url.Action("GetPriceDecrease", "Phone")',
+            type: 'POST',
+            data: {
+                categoryId: '@ViewBag.CategoryId',
+            },
+            success: function (result) {
+                var s = "";
+                for (var i = 0; i < result.length; i++) {
+                    s += '<div class="col-sm-3"> ' +
+                            '    <div class="product-image-wrapper">' +
+                            '       <a href="@Url.Action("PhoneDetail", "Phone")?id=' + result[i].Id + '">' +
+                            '        <div class="single-products">' +
+                            '            <div class="productinfo text-center">' +
+                            '                <img src="' + result[i].Image + '" alt="" height="200px"/>' +
+                            '                <h2>' + toMoney(result[i].Price) + '</h2>' +
+                            '                <p>' + result[i].Name + '</p>' +
+                            '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
+                            '            </div>' +
+                            '        </div>' +
+                            '       </a>' +
+                            '    </div>' +
+                            '</div>';
+                }
+                $('#tab-decrease').html(s);
+            }
+        }).done(function () {
+            $('a[id="btn-add-to-cart"]').each(function () {
+                $(this).click(function () {
+                    onBtnAddClick($(this));
+                });
+            });
+        });
+    }
+
+
 </script>
