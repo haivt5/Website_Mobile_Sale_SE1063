@@ -81,6 +81,10 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             {
                 cartDetail.Quantity += quantity;
                 cartDetail.Total = phone.Price * cartDetail.Quantity;
+
+                ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
+                cart.Quantity += cartDetail.Quantity.Value;
+                cart.Total += cartDetail.Total.Value;
             }
             else
             {
