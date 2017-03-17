@@ -209,6 +209,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Common\FileUploader.ashx.cs">
+      <DependentUpon>FileUploader.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountInfoController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -301,6 +304,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\404\404.png" />
+    <Content Include="Content\images\add_new_phone\test.png" />
     <Content Include="Content\images\blog\blog-one.jpg" />
     <Content Include="Content\images\blog\blog-three.jpg" />
     <Content Include="Content\images\blog\blog-two.jpg" />
@@ -428,6 +432,7 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Common\FileUploader.ashx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\cart.js" />
     <Content Include="Scripts\contact.js" />
