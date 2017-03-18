@@ -401,13 +401,19 @@
                     <!--/brands_products-->
 
                     <!--price-range-->
-                    @*<div class="price-range">
+                    <div class="price-range">
                         <h2>Price Range</h2>
-                        <div class="well text-center">
-                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
-                            <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+                        <div class="well text-left" style="padding-top: 0px; line-height: 30px">
+                            @*<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
+                            <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>*@
+                            <input type="radio" name="price" value="0" /><b>Below 1,000,000 </b><br/>
+                            <input type="radio" name="price" value="1" /><b>1,000,000 to 5,000,000 </b><br />
+                            <input type="radio" name="price" value="2" /><b>5,000,000 to 10,000,000</b><br />
+                            <input type="radio" name="price" value="3" /><b>10,000,000 to 20,000,000</b> <br />
+                            <input type="radio" name="price" value="2" /><b>Above 20,000,000</b> <br />
+                            <button id="btnPriceFilter" class="btn btn-default cart col-md-12" style="margin-left: 0px" onclick="priceFilter()">Find</button>
                         </div>
-                    </div>*@<!--/price-range-->
+                    </div><!--/price-range-->
 
                     <!--shipping-->
                     @*<div class="shipping text-center">
@@ -609,12 +615,20 @@
 
                 }
                 $('#accordian').html(s);
-            }, 
+            },
             error: function(){
                 alert('No network connection!');
             }
         });
     });
+
+
+    function priceFilter() {
+        var value = $('input[name="price"]:checked').val();
+        if (value != undefined) {
+            window.location = '@Url.Action("PhoneSearch", "Phone")?priceFilter=' + value;
+        }
+    }
 </script>
 
 

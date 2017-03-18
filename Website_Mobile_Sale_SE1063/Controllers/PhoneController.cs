@@ -97,6 +97,21 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             return Json(model);
         }
 
+        public ActionResult PhoneSearch(int priceFilter)
+        {
+            IPhoneService service = new PhoneService();
+            List<PhoneViewModel> model;
+            switch (priceFilter)
+            {
+                case 0: model = service.GetByPriceRange(0, 1000000); break;
+                case 1: model = service.GetByPriceRange(1000000, 5000000); break;
+                case 2: model = service.GetByPriceRange(5000000, 10000000); break;
+                case 3: model = service.GetByPriceRange(10000000, 20000000); break;
+                default:
+                    model = service.GetByPriceRange(20000000, int.MaxValue); break;
+            }
+            return View(model);
+        }
 
 
 

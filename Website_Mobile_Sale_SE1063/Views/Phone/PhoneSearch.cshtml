@@ -1,0 +1,216 @@
+﻿@using Website_Mobile_Sale_SE1063.Models.ViewModels
+@model List<PhoneViewModel>
+@{
+    ViewBag.Title = "Index";
+    //Hiện danh sách các product ở đây
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<section id="advertisement">
+        <div class="container">
+            <img src="~/Content/images/shop/advertisement.jpg" alt="" />
+        </div>
+    </section>*@
+<script src="~/Scripts/cart.js"></script>
+<section>
+    <div class="container">
+        @*@if (User.IsInRole("admin"))*@
+
+        <a href="@Url.Action("AdminPhoneList", "Admin")"><button class="btn btn-primary">Quản lý phone</button></a>
+
+
+
+        <div class="col-sm-9 padding-right">
+            <div class="features_items">
+                <!--features_items-->
+
+
+
+                <div class="category-tab">
+                    <!--category-tab-->
+                    @*<div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab-increase" data-toggle="tab">Price increase</a></li>
+                            <li><a href="#tab-decrease" data-toggle="tab">Price decrease</a></li>
+                            <li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
+                                <li><a href="#kids" data-toggle="tab">Kids</a></li>
+                                <li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
+                        </ul>
+                    </div>*@
+                    <div class="tab-content">
+                        @*<div class="tab-pane fade active in" id="tab-increase">
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-decrease">
+                        </div>*@
+
+                        @foreach (var item in Model)
+                        {
+
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <a href="@Url.Action("PhoneDetail", "Phone", new { id = item.Id})">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="@item.Image" alt="" height="200"/>
+                                                <h2 id="price">@item.Price</h2>
+                                                <p>@item.Name</p>
+                                                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                </div>
+                            </div>
+
+                        }
+
+
+                    </div>
+                </div>
+
+
+
+
+
+                @*@foreach (var item in Model)
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="@item.Image" alt="" width="250" height="250" />
+
+                                        <h2 id="price">@item.Price</h2>
+                                        <p>@item.Name</p>
+                                        <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </div>
+                                    <div class="product-overlay">
+                                        <div class="overlay-content">
+                                            <h2 id="price">@item.Price</h2>
+                                            <p>@item.Name</p>
+                                            <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }*@
+
+
+
+
+
+
+            </div><!--features_items-->
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/cart.js"></script>
+<script>
+    var cart;
+    $(document).ready(function () {
+        cart = new Cart();
+        cart.Initialize();
+        //loadIncrease();
+
+        $('a[id="btn-add-to-cart"]').each(function () {
+            $(this).click(function () {
+                onBtnAddClick($(this));
+            });
+        });
+
+        $('h2[id=price]').each(function () {
+            var string = $(this).html().substring(0, $(this).html().indexOf("."));
+            $(this).html(toMoney(string) + "đ");
+        });
+
+        $('a[href="#tab-increase"]').click(loadIncrease);
+        $('a[href="#tab-decrease"]').click(loadDecrease);
+    });
+
+    function onBtnAddClick(element) {
+        var phoneId = element.attr('data-phone-id');
+
+        cart.Add(phoneId);
+    }
+
+    function loadIncrease() {
+        $.ajax({
+            url: '@Url.Action("GetPriceIncrease", "Phone")',
+            type: 'POST',
+            data: {
+                categoryId: '@ViewBag.CategoryId',
+            },
+            success: function (result) {
+                var s = "";
+                for (var i = 0; i < result.length; i++) {
+                    s += '<div class="col-sm-3"> ' +
+                            '    <div class="product-image-wrapper">' +
+                            '       <a href="@Url.Action("PhoneDetail", "Phone")?id=' + result[i].Id + '">' +
+                            '        <div class="single-products">' +
+                            '            <div class="productinfo text-center">' +
+                            '                <img src="' + result[i].Image + '" alt="" height="200px"/>' +
+                            '                <h2>' + toMoney(result[i].Price) + '</h2>' +
+                            '                <p>' + result[i].Name + '</p>' +
+                            '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
+                            '            </div>' +
+                            '        </div>' +
+                            '       </a>' +
+                            '    </div>' +
+                            '</div>';
+                }
+                $('#tab-increase').html(s);
+            }
+        }).done(function () {
+            $('a[id="btn-add-to-cart"]').each(function () {
+                $(this).click(function () {
+                    onBtnAddClick($(this));
+                });
+            });
+        });
+    }
+
+    function loadDecrease() {
+        $.ajax({
+            url: '@Url.Action("GetPriceDecrease", "Phone")',
+            type: 'POST',
+            data: {
+                categoryId: '@ViewBag.CategoryId',
+            },
+            success: function (result) {
+                var s = "";
+                for (var i = 0; i < result.length; i++) {
+                    s += '<div class="col-sm-3"> ' +
+                            '    <div class="product-image-wrapper">' +
+                            '       <a href="@Url.Action("PhoneDetail", "Phone")?id=' + result[i].Id + '">' +
+                            '        <div class="single-products">' +
+                            '            <div class="productinfo text-center">' +
+                            '                <img src="' + result[i].Image + '" alt="" height="200px"/>' +
+                            '                <h2>' + toMoney(result[i].Price) + '</h2>' +
+                            '                <p>' + result[i].Name + '</p>' +
+                            '                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="' + result[i].Id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
+                            '            </div>' +
+                            '        </div>' +
+                            '       </a>' +
+                            '    </div>' +
+                            '</div>';
+                }
+                $('#tab-decrease').html(s);
+            }
+        }).done(function () {
+            $('a[id="btn-add-to-cart"]').each(function () {
+                $(this).click(function () {
+                    onBtnAddClick($(this));
+                });
+            });
+        });
+    }
+
+
+</script>
