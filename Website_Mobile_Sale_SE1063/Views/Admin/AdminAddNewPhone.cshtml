@@ -1,109 +1,320 @@
-﻿@using Website_Mobile_Sale_SE1063.Models.Entities
+﻿@model Website_Mobile_Sale_SE1063.Models.Entities.Phone
+@using Website_Mobile_Sale_SE1063.Models.Entities
+
 @{
+    ViewBag.Title = "AdminAddNewPhone";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+@*<section>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Phone</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ScreenResolution, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ScreenResolution, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ScreenResolution, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RAM, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RAM, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RAM, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Platform, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Platform, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Platform, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+</section>*@
 
 <section>
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Add New Phone</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        EShopper - Phone
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label>Phone Name</label>
-                                        <input class="form-control" placeholder="iPhone 7">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Capacity (GB)</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>4</option>
-                                            <option>8</option>
-                                            <option>16</option>
-                                            <option>32</option>
-                                            <option>64</option>
-                                            <option>128</option>
-                                            <option>256</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Screen Resolution</label>
-                                        <input class="form-control" placeholder="1024x768">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Platform</label>
-                                        <select class="form-control">
-                                            <option>iOS</option>
-                                            <option>Android</option>
-                                            <option>Windows Phone</option>
-                                            <option>Symbian</option>
-                                            <option>Tizen OS</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price (VND)</label>
-                                        <input class="form-control" placeholder="1024">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone Images</label>
-                                        <input type="file">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Save to Database</button>
-                                    <button type="reset" class="btn btn-default">Reset Form</button>
-                                </form>
-                            </div>
-                            <!-- /.col-lg-6 (nested) -->
-                            <div class="col-lg-6">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label>Category</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Color</label>
-                                        <input class="form-control" placeholder="Black">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>RAM (GB)</label>
-                                        <input class="form-control" placeholder="1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Quantity in Stock</label>
-                                        <input class="form-control" placeholder="1">
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.col-lg-6 (nested) -->
-                        </div>
-                        <!-- /.row (nested) -->
-                    </div>
-                    <!-- /.panel-body -->
+    @using (Html.BeginForm("AdminAddNewPhone","Admin",FormMethod.Post,new { @entype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Add New Phone</h1>
                 </div>
-                <!-- /.panel -->
+                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.col-lg-12 -->
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            EShopper - Phone
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="col-lg-6">
+                                    <form role="form">
+
+                                        <div class="form-group">
+                                            <label>Phone Name</label>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "iPhone 7" } })
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Capacity (GB)</label>
+                                            <div class="form-group">
+                                                @*@Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control", @placeholder = "64" } })*@
+                                                @Html.DropDownListFor(model => model.Capacity, new List<SelectListItem> {new SelectListItem { Value = "1" , Text = "1" },
+                                                                                                                        new SelectListItem { Value = "2" , Text = "2" },
+                                                                                                                        new SelectListItem { Value = "4" , Text = "4" },
+                                                                                                                        new SelectListItem { Value = "8" , Text = "8" },
+                                                                                                                        new SelectListItem { Value = "16" , Text = "16" },
+                                                                                                                        new SelectListItem { Value = "32" , Text = "32" },
+                                                                                                                        new SelectListItem { Value = "64" , Text = "64" },
+                                                                                                                        new SelectListItem { Value = "128" , Text = "128" },
+                                                                                                                        new SelectListItem { Value = "256" , Text = "256" },
+                                                                                                                        new SelectListItem { Value = "512" , Text = "512" }}, new { htmlAttributes = new { @class = "form-control"} })
+                                                @*@Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Screen Resolution</label>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.ScreenResolution, new { htmlAttributes = new { @class = "form-group", @placeholder = "1024x768" } })
+                                                @Html.ValidationMessageFor(model => model.ScreenResolution, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Platform</label>
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(model => model.Platform, new List<SelectListItem> {new SelectListItem { Value = "iOS" , Text = "iOS" },
+                                                                                                                        new SelectListItem { Value = "Android" , Text = "Android" },
+                                                                                                                        new SelectListItem { Value = "Windows Phone" , Text = "Windows Phone" },
+                                                                                                                        new SelectListItem { Value = "Symbian" , Text = "Symbian" },
+                                                                                                                        new SelectListItem { Value = "Tizen OS" , Text = "Tizen OS" }}, new { htmlAttributes = new { @class = "form-group" } })
+                                            </div>
+                                        </div>
+
+                                        @*<div class="form-group">
+                                            <label>Phone Images</label>
+                                            <div class="form-group">
+                                                <input type="file" name="fileUpload">
+                                            </div>
+                                        </div>*@
+                                        <div class="input" >
+                                            <label> Image </label>
+                                            <input type="file" class="upload" id = "f_Upload" />
+                                            <img id="myUpload" alt="photo" style="max-width:100px" data-src="" />
+                                            <input type="hidden" name="imageURL" id="imageURL" />
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <div class="col-lg-6">
+                                    <form role="form">
+
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <div class="form-group">
+                                                @*@Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Apple" } })*@
+                                                @Html.DropDownList("CategoryID", null, new { htmlAttributes = new { @class = "form-control"} })
+                                                @*@Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>RAM (GB)</label>
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(model => model.RAM, new List<SelectListItem> {new SelectListItem { Value = "1" , Text = "1" },
+                                                                                                                        new SelectListItem { Value = "2" , Text = "2" },
+                                                                                                                        new SelectListItem { Value = "3" , Text = "3" },
+                                                                                                                        new SelectListItem { Value = "4" , Text = "4" },
+                                                                                                                        new SelectListItem { Value = "5" , Text = "5" }}, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Quantity in Stock</label>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @placeholder = "10" } })
+                                                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Price (USD)</label>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "2000" } })
+                                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Description of Phone</label>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "The best phone in Solar System" } })
+                                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+
+                                        @*<div class="form-group">
+                                            <label>Color</label>
+                                            <input class="form-control" placeholder="Black">
+                                        </div>*@
+                                        
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+
+                            <br></br>
+                            <button type="submit" value="Create" class="btn btn-default">Save to Database</button>
+                            <button type="reset" class="btn btn-default">Reset Form</button>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
+        <!-- /#page-wrapper -->
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
-    <!-- /#page-wrapper -->
+
+    //script save image
+    @section Scripts {
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                var url = window.URL || window.webkitURL;
+                $("#f_Upload").on('change', function () {
+                    var file, img;
+                    if ((file = this.files[0])) {
+                        img = new Image();
+                        img.onload = function () {
+                            sendFile(file);
+                        };
+                        img.onerror = function () {
+                            //error message
+                        };
+                        img.src = url.createObjectURL(file);
+                    }
+                });
+            });
+
+            function sendFile(file) {
+                var formData = new FormData();
+                formData.append('file', $('#f_Upload')[0].files[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Common/FileUploader.ashx',
+                    data: formData,
+                    success: function (status) {
+                        if (status != 'error') {
+                            var myPath = "/Content/images/add_new_phone/" + status;
+                            $('#myUpload').attr("src", myPath);
+                            $('#myUpload').attr("data-src", status);
+                            $('#imageURL').val = myPath;
+                        }
+                    },
+                    processData: false,
+                    contentType: false,
+                    error: function () {
+                        //error message
+                    }
+                });
+            }
+        </script>
+    }
+        
+
 </section>

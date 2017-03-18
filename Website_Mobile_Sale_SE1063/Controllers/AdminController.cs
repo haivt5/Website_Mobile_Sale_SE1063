@@ -8,6 +8,7 @@ using Website_Mobile_Sale_SE1063.Models.Services;
 using Website_Mobile_Sale_SE1063.Models.ViewModels;
 using PagedList;
 using PagedList.Mvc;
+using System.IO;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
 {
@@ -28,9 +29,27 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         //    return View(model);
         //}
 
-        public ActionResult AdminAddNewPhone(string returnUrl)
+        [HttpGet]
+        public ActionResult AdminAddNewPhone()
         {
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.CategoryID = new SelectList(db.Categories.ToList().OrderBy(n => n.Name), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AdminAddNewPhone(Phone phone, string imageURL)
+        {
+            //var fileName = Path.GetFileName(fileUpload.FileName);
+            //var path = Path.Combine(Server.MapPath("~/Content/images/add_new_phone"), fileName);
+
+            ViewBag.CategoryID = new SelectList(db.Categories.ToList().OrderBy(n => n.Name), "Id", "Name");
+
+            if (ModelState.IsValid)
+            {
+                
+                db.Phones.Add(phone);
+                db.SaveChanges();
+            }
             return View();
         }
     }
