@@ -21,9 +21,10 @@ namespace Website_Mobile_Sale_SE1063.Controllers
 
         public ActionResult PhoneList(int categoryId)
         {
-            IPhoneService service = new PhoneService();
-            List<Phone> model = service.GetByCategoryId(categoryId);
-            return View(model);
+            //IPhoneService service = new PhoneService();
+            //List<Phone> model = service.GetByCategoryId(categoryId);
+            ViewBag.CategoryId = categoryId;
+            return View();
         }
 
         public ActionResult PhoneDetail(int id)
@@ -69,5 +70,50 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             var phones = phoneService.GetNewPhones().ToArray();
             return Json(phones);
         }
+
+        [HttpPost]
+        public JsonResult GetPriceIncrease(int categoryId)
+        {
+            IPhoneService service = new PhoneService();
+            List<Phone> phones = service.GetByCategoryId(categoryId).OrderBy(q => q.Price).ToList();
+            List<PhoneViewModel> model = new List<PhoneViewModel>();
+            foreach (var item in phones)
+            {
+                model.Add(MapperService<Phone, PhoneViewModel>.Map(item, new PhoneViewModel()));
+            }
+            return Json(model);
+        }
+
+        [HttpPost]
+        public JsonResult GetPriceDecrease(int categoryId)
+        {
+            IPhoneService service = new PhoneService();
+            List<Phone> phones = service.GetByCategoryId(categoryId).OrderByDescending(q => q.Price).ToList();
+            List<PhoneViewModel> model = new List<PhoneViewModel>();
+            foreach (var item in phones)
+            {
+                model.Add(MapperService<Phone, PhoneViewModel>.Map(item, new PhoneViewModel()));
+            }
+            return Json(model);
+        }
+
+        public ActionResult PhoneSearch(int priceFilter)
+        {
+            IPhoneService service = new PhoneService();
+            List<PhoneViewModel> model;
+            switch (priceFilter)
+            {
+                case 0: model = service.GetByPriceRange(0, 1000000); break;
+                case 1: model = service.GetByPriceRange(1000000, 5000000); break;
+                case 2: model = service.GetByPriceRange(5000000, 10000000); break;
+                case 3: model = service.GetByPriceRange(10000000, 20000000); break;
+                default:
+                    model = service.GetByPriceRange(20000000, int.MaxValue); break;
+            }
+            return View(model);
+        }
+
+
+
     }
 }

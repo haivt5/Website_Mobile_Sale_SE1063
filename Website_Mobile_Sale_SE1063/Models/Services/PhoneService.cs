@@ -16,6 +16,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
         List<Phone> GetByCategoryId(int categoryId);
         List<Phone> GetAllGroupByCategory();
         List<PhoneViewModel> GetNewPhones();
+        List<PhoneViewModel> GetByPriceRange(int from, int to);
     }
 
     public class PhoneService : IPhoneService
@@ -48,6 +49,20 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             PhoneViewModel model = MapperService<Phone, PhoneViewModel>.Map(product, new PhoneViewModel());
             model.CategoryModel = MapperService<Category, CategoryViewModel>.Map(product.Category, new CategoryViewModel());
             return model;
+        }
+
+        public List<PhoneViewModel> GetByPriceRange(int from, int to)
+        {
+            List<Phone> phones = this.entites.Phones.Where(q => q.Price > from && q.Price <= to)
+                .OrderBy(q => q.Price).AsEnumerable().ToList();
+            List<PhoneViewModel> model = new List<PhoneViewModel>();
+            foreach (var phone in phones)
+            {
+                model.Add(MapperService<Phone, PhoneViewModel>.Map(phone, new PhoneViewModel()));
+            }
+
+            return model;
+
         }
 
         public List<PhoneViewModel> GetNewPhones()
