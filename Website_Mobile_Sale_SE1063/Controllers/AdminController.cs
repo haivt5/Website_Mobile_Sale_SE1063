@@ -52,5 +52,28 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult AdminEditPhone(int PhoneId)
+        {
+            Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
+            if(phone == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(phone);
+        }
+
+        public ActionResult AdminViewDetail(int PhoneId)
+        {
+            Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
+            if(phone == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(phone);
+        }
     }
 }
