@@ -51,7 +51,6 @@
                         <td class="price">Price</td>
                         <td class="quantity">Quantity</td>
                         <td class="total">Total</td>
-                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,7 +65,7 @@
                                 <p>@Model.CartDetailsModel.ElementAt(i).PhoneModel.Description</p>
                             </td>
                             <td class="cart_price">
-                                <p>@Model.CartDetailsModel.ElementAt(i).PhoneModel.Price</p>
+                                <p id="price">@Model.CartDetailsModel.ElementAt(i).PhoneModel.Price</p>
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
@@ -74,10 +73,7 @@
                                 </div>
                             </td>
                             <td class="cart_total">
-                                <p class="cart_total_price">@Model.CartDetailsModel.ElementAt(i).Total</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                <p class="cart_total_price" id="price">@Model.CartDetailsModel.ElementAt(i).Total</p>
                             </td>
                         </tr>
                     }
@@ -87,7 +83,7 @@
                             <table class="table table-condensed total-result">
                                 <tr>
                                     <td>Cart Sub Total</td>
-                                    <td>@Model.Total</td>
+                                    <td id="price">@Model.Total</td>
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Shipping Cost</td>
@@ -95,7 +91,7 @@
                                 </tr>
                                 <tr>
                                     <td>Total</td>
-                                    <td><span>@Model.Total</span></td>
+                                    <td><span id="price">@Model.Total</span></td>
                                 </tr>
                             </table>
                         </td>
@@ -121,6 +117,18 @@
     $(document).ready(function () {
         var cart = new Cart();
         cart.Initialize();
+
+
+        $('p[id=price]').each(function () {
+            var string = $(this).html().substring(0, $(this).html().indexOf("."));
+            $(this).html(toMoney(string) + "đ");
+        });
+
+        $('span[id=price]').each(function () {
+            var string = $(this).html().substring(0, $(this).html().indexOf("."));
+            $(this).html(toMoney(string) + "đ");
+        });
+
         $('#btnContinue').click(function () {
             $.ajax({
                 url: '@Url.Action("Complete", "ShoppingCart")',

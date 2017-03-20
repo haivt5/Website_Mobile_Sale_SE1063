@@ -166,10 +166,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             IShoppingCartService cartService = new ShoppingCartService();
             try
             {
-                for (int i = 0; i < phoneId.Length; i++)
-                {
-                    cartService.Update(cartId, phoneId[i], quantity[i]);
-                }
+                cartService.UpdateEntireCart(cartId, phoneId.ToList(), quantity.ToList());
                 return GetCart(cartId, null);
             }
             catch (Exception e)

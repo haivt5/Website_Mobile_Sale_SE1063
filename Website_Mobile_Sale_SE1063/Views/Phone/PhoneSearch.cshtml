@@ -1,4 +1,5 @@
-﻿@using Website_Mobile_Sale_SE1063.Models.Entities
+﻿@using Website_Mobile_Sale_SE1063.Models.ViewModels
+@model List<PhoneViewModel>
 @{
     ViewBag.Title = "Index";
     //Hiện danh sách các product ở đây
@@ -10,17 +11,17 @@
 
 
 @*<section id="advertisement">
-    <div class="container">
-        <img src="~/Content/images/shop/advertisement.jpg" alt="" />
-    </div>
-</section>*@
-
+        <div class="container">
+            <img src="~/Content/images/shop/advertisement.jpg" alt="" />
+        </div>
+    </section>*@
+<script src="~/Scripts/cart.js"></script>
 <section>
     <div class="container">
         @*@if (User.IsInRole("admin"))*@
-        
-            <a href="@Url.Action("AdminPhoneList", "Admin")"><button class="btn btn-primary">Quản lý phone</button></a>
-        
+
+        <a href="@Url.Action("AdminPhoneList", "Admin")"><button class="btn btn-primary">Quản lý phone</button></a>
+
 
 
         <div class="col-sm-9 padding-right">
@@ -31,21 +32,44 @@
 
                 <div class="category-tab">
                     <!--category-tab-->
-                    <div class="col-sm-12">
+                    @*<div class="col-sm-12">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab-increase" data-toggle="tab">Price increase</a></li>
                             <li><a href="#tab-decrease" data-toggle="tab">Price decrease</a></li>
-                            @*<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
-                    <li><a href="#kids" data-toggle="tab">Kids</a></li>
-                    <li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>*@
+                            <li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
+                                <li><a href="#kids" data-toggle="tab">Kids</a></li>
+                                <li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
                         </ul>
-                    </div>
+                    </div>*@
                     <div class="tab-content">
-                        <div class="tab-pane fade active in" id="tab-increase">
+                        @*<div class="tab-pane fade active in" id="tab-increase">
                         </div>
 
                         <div class="tab-pane fade" id="tab-decrease">
-                        </div>
+                        </div>*@
+
+                        @foreach (var item in Model)
+                        {
+
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <a href="@Url.Action("PhoneDetail", "Phone", new { id = item.Id})">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="@item.Image" alt="" height="200"/>
+                                                <h2 id="price">@item.Price</h2>
+                                                <p>@item.Name</p>
+                                                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                </div>
+                            </div>
+
+                        }
+
 
                     </div>
                 </div>
@@ -54,34 +78,34 @@
 
 
 
-            @*@foreach (var item in Model)
-            {
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="@item.Image" alt="" width="250" height="250" />
+                @*@foreach (var item in Model)
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="@item.Image" alt="" width="250" height="250" />
 
-                                <h2 id="price">@item.Price</h2>
-                                <p>@item.Name</p>
-                                <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </div>
-                            <div class="product-overlay">
-                                <div class="overlay-content">
-                                    <h2 id="price">@item.Price</h2>
-                                    <p>@item.Name</p>
-                                    <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <h2 id="price">@item.Price</h2>
+                                        <p>@item.Name</p>
+                                        <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </div>
+                                    <div class="product-overlay">
+                                        <div class="overlay-content">
+                                            <h2 id="price">@item.Price</h2>
+                                            <p>@item.Name</p>
+                                            <a href="#" class="btn btn-default add-to-cart" id="btn-add-to-cart" data-phone-id="@item.Id"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            }*@
+                    }*@
 
 
 
-                
-                
+
+
 
             </div><!--features_items-->
         </div>
@@ -93,7 +117,7 @@
     $(document).ready(function () {
         cart = new Cart();
         cart.Initialize();
-        loadIncrease();
+        //loadIncrease();
 
         $('a[id="btn-add-to-cart"]').each(function () {
             $(this).click(function () {

@@ -119,6 +119,8 @@
         cart.Initialize();
 
         loadCart();
+
+        
     });
 
     function loadCart() {
@@ -141,7 +143,7 @@
     function loadCartToHTML(data) {
         var s = "";
         for (var i = 0; i < data.CartDetails.length; i++) {
-            s += '<tr>' +
+            s += '<tr data-phone-id="' + data.CartDetails[i].PhoneModel.Id + '">' +
                         '    <td class="cart_product">' +
                         '        <a href=""><img src="' + data.CartDetails[i].PhoneModel.Image +'" alt=""></a>' +
                         '    </td>' +
@@ -155,15 +157,15 @@
                         '    <td class="cart_quantity">' +
                         '        <div class="cart_quantity_button">' +
                         '            <a class="cart_quantity_up" id="quantity-up" style="cursor: pointer"> + </a>' +
-                        '            <input class="cart_quantity_input" type="text" name="quantity" value="' + data.CartDetails[i].Quantity + '" autocomplete="off" size="2" id="phone-quantity">' +
+                        '            <input class="cart_quantity_input" type="text" name="quantity" value="' + data.CartDetails[i].Quantity + '" autocomplete="off" size="2" id="phone-quantity" readonly>' +
                         '            <a class="cart_quantity_down" id="quantity-down" style="cursor: pointer"> - </a>' +
                         '        </div>' +
                         '    </td>' +
                         '    <td class="cart_total">' +
-                        '        <p class="cart_total_price">' + data.CartDetails[i].Total + '</p>' +
+                        '        <p class="cart_total_price">' + toMoney(data.CartDetails[i].Total) + 'đ</p>' +
                         '    </td>' +
                         '    <td class="cart_delete">' +
-                        '        <a class="cart_quantity_delete"><i class="fa fa-times"></i></a>' +
+                        '        <a class="cart_quantity_delete" id="delete-phone" data-phone-id="' + data.CartDetails[i].PhoneModel.Id + '"><i class="fa fa-times"></i></a>' +
                         '        <input type="hidden" value="' + data.CartDetails[i].PhoneModel.Id + '" id="phone-id"/>' +
                         '    </td>' +
                         '</tr>';
@@ -216,35 +218,45 @@
         });
 
         $('#update').click(function () {
+            updateCart();
+        });
 
-            var phoneId = [];
-            var quantity = [];
+        $('a[id="delete-phone"]').each(function () {
+            $(this).click(function () {
+                var phoneId = $(this).attr('data-phone-id');
+                $('tr[data-phone-id="' + phoneId + '"]').remove();
+                updateCart();
 
-            $('input[id="phone-quantity"]').each(function () {
-                quantity.push($(this).val());
-            });
-            $('input[id="phone-id"]').each(function () {
-                phoneId.push($(this).val());
-            });
-            $.ajax({
-                url: '@Url.Action("UpdateEntireCart", "ShoppingCart")',
-                type: 'POST',
-                data: {
-                    phoneId: phoneId,
-                    quantity: quantity,
-                    cartId: cart.Id,
-                },
-                success: function (data) {
-                    loadCartToHTML(data);
-                },
-                error: function () {
-                    alert('No network connection');
-                }
             });
         });
     }
 
-    
+    function updateCart() {
+        var phoneId = [];
+        var quantity = [];
+
+        $('input[id="phone-quantity"]').each(function () {
+            quantity.push($(this).val());
+        });
+        $('input[id="phone-id"]').each(function () {
+            phoneId.push($(this).val());
+        });
+        $.ajax({
+            url: '@Url.Action("UpdateEntireCart", "ShoppingCart")',
+            type: 'POST',
+            data: {
+                phoneId: phoneId,
+                quantity: quantity,
+                cartId: cart.Id,
+            },
+            success: function (data) {
+                loadCartToHTML(data);
+            },
+            error: function () {
+                alert('No network connection');
+            }
+        });
+    }
 
 
 
