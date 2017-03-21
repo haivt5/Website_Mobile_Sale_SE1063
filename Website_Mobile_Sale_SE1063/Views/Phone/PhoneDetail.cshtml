@@ -59,7 +59,7 @@
                             <!--/product-information-->
                             <img src="~/Content/images/product-details/new.jpg" class="newarrival" alt="" />
                             <h2>@Model.Name</h2>
-                            <p>@Model.Description</p>
+                            <p>@Html.Raw(@Model.Description)</p>
                             <img src="~/Content/images/product-details/rating.png" alt="" />
                             <span>
                                 <span id="price">VND @Model.Price</span>
