@@ -31,16 +31,7 @@
                                 @Html.DisplayNameFor(model => model.First().Capacity)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.First().ScreenResolution)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.First().RAM)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.First().Platform)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.First().Quantity)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.First().Image)
@@ -66,20 +57,10 @@
                                     @Html.DisplayFor(modelItem => item.Capacity)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ScreenResolution)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RAM)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Platform)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Quantity)
-                                </td>
-                                <td>
                                     <div id="PhoneImage"><img src="@item.Image" witdh="100" height="150" /></div>
-                                    @*@Html.DisplayFor(modelItem => item.Image)*@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Price)
@@ -87,7 +68,7 @@
                                 <td>
                                     @Html.ActionLink("Edit", "AdminEditPhone", new { @PhoneId = item.Id }) |
                                     @Html.ActionLink("Details", "AdminViewDetail", new { @PhoneId = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    @Html.ActionLink("Delete", "Delete", new { @PhoneId = item.Id })
                                 </td>
                             </tr>
                         }
