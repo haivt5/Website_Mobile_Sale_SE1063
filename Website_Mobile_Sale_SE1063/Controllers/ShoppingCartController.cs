@@ -99,8 +99,9 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             {
                 int id = cartService.Add(cartId, phoneId, quantity);
                 return Json(new {
-                    Success = true,
-                    Id = id
+                    Success = id == -1 ? false : true,
+                    Id = id,
+                    Error = id == -1 ? "Sorry, we don't have enough quantity of this phone" : null,
                 });
             }
             catch (Exception e)
@@ -122,8 +123,9 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                 int id = cartService.Update(cartId, phoneId, quantity);
                 return Json(new
                 {
-                    Success = true,
-                    Id = id
+                    Success = id == -1 ? false : true,
+                    Id = id,
+                    Error = id == -1 ? "Sorry, we don't have enough quantity of this phone" : null,
                 });
             }
             catch (Exception e)
@@ -166,10 +168,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             IShoppingCartService cartService = new ShoppingCartService();
             try
             {
-                for (int i = 0; i < phoneId.Length; i++)
-                {
-                    cartService.Update(cartId, phoneId[i], quantity[i]);
-                }
+                cartService.UpdateEntireCart(cartId, phoneId.ToList(), quantity.ToList());
                 return GetCart(cartId, null);
             }
             catch (Exception e)

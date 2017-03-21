@@ -24,24 +24,24 @@
                                 {
                                     if (i == 0)
                                     {
-                                        <div class="item active">
+                                <div class="item active">
                                             @for (int j = 0; j < 3; j++)
                                             {
                                                 <a href=""><img src="@Model.Image" alt="" width="85" height="85" ></a>
                                             }
-                                        </div>
+                                </div>
                                     }
                                     else
                                     {
-                                        <div class="item">
+                                <div class="item">
                                             @for (int j = 0; j < 3; j++)
                                             {
                                                 <a href=""><img src="@Model.Image" alt="" width="85" height="85"></a>
                                             }
-                                        </div>
+                                </div>
                                     }
                                 }
-                                
+
                             </div>
 
                             <!-- Controls -->
@@ -59,12 +59,12 @@
                             <!--/product-information-->
                             <img src="~/Content/images/product-details/new.jpg" class="newarrival" alt="" />
                             <h2>@Model.Name</h2>
-                            <p>@Model.Description</p>
+                            <p>@Html.Raw(@Model.Description)</p>
                             <img src="~/Content/images/product-details/rating.png" alt="" />
                             <span>
-                                <span>VND @Model.Price</span>
+                                <span id="price">VND @Model.Price</span>
                                 <label>Quantity:</label>
-                                <input type="text" value="1" id="quantity"/>
+                                <input type="number" value="1" id="quantity"/>
                                 <button type="button" class="btn btn-fefault cart" id="btn-add">
                                     <i class="fa fa-shopping-cart"></i>
                                     Add to cart
@@ -83,9 +83,9 @@
                     <div class="col-sm-12">
                         <ul class="nav nav-tabs">
                             <li><a href="#details" data-toggle="tab">Details</a></li>
-                            <li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
+                            @*<li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
                             <li><a href="#tag" data-toggle="tab">Tag</a></li>
-                            <li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+                            <li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>*@
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -104,7 +104,7 @@
                             </div>*@
                         </div>
 
-                        <div class="tab-pane fade" id="companyprofile">
+                        @*<div class="tab-pane fade" id="companyprofile">
                         </div>
 
                         <div class="tab-pane fade" id="tag">
@@ -132,12 +132,12 @@
                                     </button>
                                 </form>
                             </div>
-                        </div>
+                        </div>*@
 
                     </div>
                 </div><!--/category-tab-->
 
-                <!--recommended_items-->
+                    <!--recommended_items-->
                 @*<div class="recommended_items">
                     <h2 class="title text-center">recommended items</h2>
 
@@ -241,6 +241,11 @@
         cart.Initialize();
 
         $('#btn-add').click(onBtnAddClick);
+
+        $('span[id=price]').each(function () {
+            var string = $(this).html().substring(4, $(this).html().indexOf("."));
+            $(this).html("VND " + toMoney(string));
+        });
     });
 
     function onBtnAddClick() {

@@ -82,6 +82,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -201,8 +209,12 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Common\FileUploader.ashx.cs">
+      <DependentUpon>FileUploader.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountInfoController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartDetailController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -281,11 +293,18 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.bootstrap.min.css" />
+    <Content Include="Content\admin.dataTables.bootstrap.css" />
+    <Content Include="Content\admin.dataTables.responsive.css" />
+    <Content Include="Content\admin.font-awesome.min.css" />
+    <Content Include="Content\admin.metisMenu.min.css" />
+    <Content Include="Content\admin.sb-admin-2.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\404\404.png" />
+    <Content Include="Content\images\add_new_phone\test.png" />
     <Content Include="Content\images\blog\blog-one.jpg" />
     <Content Include="Content\images\blog\blog-three.jpg" />
     <Content Include="Content\images\blog\blog-two.jpg" />
@@ -371,6 +390,7 @@
     <Content Include="Content\images\shop\product8.jpg" />
     <Content Include="Content\images\shop\product9.jpg" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\prettyPhoto.css" />
     <Content Include="Content\price-range.css" />
     <Content Include="Content\responsive.css" />
@@ -388,6 +408,13 @@
       <DependentUpon>WebEntity.edmx</DependentUpon>
       <LastGenOutput>WebEntity.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\admin.bootstrap.min.js" />
+    <Content Include="Scripts\admin.dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\admin.dataTables.responsive.js" />
+    <Content Include="Scripts\admin.jquery.dataTables.min.js" />
+    <Content Include="Scripts\admin.jquery.min.js" />
+    <Content Include="Scripts\admin.metisMenu.min.js" />
+    <Content Include="Scripts\admin.sb-admin-2.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -405,6 +432,7 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Common\FileUploader.ashx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\cart.js" />
     <Content Include="Scripts\contact.js" />
@@ -469,6 +497,12 @@
     <Content Include="Views\CartDetail\Checkout.cshtml" />
     <Content Include="Views\Shared\_LayoutWithoutCategory.cshtml" />
     <Content Include="Views\ShoppingCart\Checkout.cshtml" />
+    <Content Include="Views\Admin\AdminAddNewPhone.cshtml" />
+    <Content Include="Views\Admin\AdminPhoneList.cshtml" />
+    <Content Include="Views\Shared\_Layout_Admin.cshtml" />
+    <Content Include="Views\Phone\PhoneSearch.cshtml" />
+    <Content Include="Views\Admin\AdminEditPhone.cshtml" />
+    <Content Include="Views\Admin\AdminViewDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

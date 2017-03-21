@@ -1,0 +1,123 @@
+﻿@model Website_Mobile_Sale_SE1063.Models.Entities.Phone
+
+@{
+    ViewBag.Title = "AdminViewDetail";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<section>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    @Html.DisplayFor(model => model.Name)
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form role="form">
+                                    <dt>
+                                        <div id="PhoneImage"><img src="@Model.Image" witdh="300" height="300" /></div>
+                                    </dt>
+                                </form>
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                            
+
+                            <div class="col-lg-6">
+                                <form role="form">
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Category)
+                                        
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Category.Name)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Capacity)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Capacity) GB
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.ScreenResolution)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.ScreenResolution)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.RAM)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.RAM) GB
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Platform)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Platform)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Quantity)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Quantity)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Price)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Price) VND
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Description)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Description)
+                                    </dd>
+                                </form>
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                        <!-- /.row (nested) -->
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <p>
+            @Html.ActionLink("Edit", "AdminEditPhone", new { @PhoneId = Model.Id }) |
+            @Html.ActionLink("Back to List", "AdminPhoneList")
+        </p>
+
+    </div>
+    <!-- /#page-wrapper -->
+</section>
