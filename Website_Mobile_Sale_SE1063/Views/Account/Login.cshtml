@@ -12,6 +12,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="text-danger">@ViewBag.Error</div>
+
+                    }
                     <div class="login-form">
                         <!--login form-->
                         <h2>Login to your account</h2>
@@ -31,6 +36,16 @@
                 <div class="col-sm-1">
                     <h2 class="or">OR</h2>
                 </div>
+                @if (ViewBag.Error != null)
+                {
+                    <div class="text-danger">
+                        @foreach (var item in ViewBag.Error)
+                        {
+                            @item <br />
+                        }
+                    </div>
+
+                }
                 <div class="col-sm-4">
                     <div class="signup-form">
                         <!--sign up form-->

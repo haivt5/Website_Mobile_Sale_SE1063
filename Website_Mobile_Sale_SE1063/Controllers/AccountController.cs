@@ -222,7 +222,8 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             AddErrors(result);
 
             // If we got this far, something failed, redisplay form
-            return View();
+            ViewBag.Error = result.Errors;
+            return View("Login");
         }
 
 
