@@ -68,7 +68,7 @@
                                 <td>
                                     @Html.ActionLink("Edit", "AdminEditPhone", new { @PhoneId = item.Id }) |
                                     @Html.ActionLink("Details", "AdminViewDetail", new { @PhoneId = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { @PhoneId = item.Id })
+                                    @Html.ActionLink("Delete", "AdminDeletePhone", new { @PhoneId = item.Id })
                                 </td>
                             </tr>
                         }
@@ -84,10 +84,6 @@
                             display: inline;
                         }
                     </style>
-
-                    <div>
-                        <button type="submit" class="btn btn-default">Add New Phone</button>
-                    </div>
                 </div>
                 <!-- /.panel -->
             </div>
