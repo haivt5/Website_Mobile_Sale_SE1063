@@ -105,8 +105,6 @@
 </section>*@
 
 <section>
-    
-    
         @Html.AntiForgeryToken()
 
         <div id="page-wrapper">
@@ -188,7 +186,7 @@
                                             <label> Image </label>
                                             <input type="file" class="upload" id = "f_Upload" />
                                             <img id="myUpload" alt="photo" style="max-width:100px" data-src="" />
-                                            <input type="hidden" name="imageURL" id="imageURL" />
+                                            <input type="hidden" name="Image" id="Image" />
                                         </div>
                                         
                                     </form>
@@ -263,6 +261,9 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                    <div>
+                        @Html.ActionLink("Back to List", "AdminPhoneList")
+                    </div>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -271,11 +272,9 @@
         <!-- /#page-wrapper -->
     
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+    
 
-    //script save image
+    @*script save image*@
     @section Scripts {
         <script type="text/javascript">
 
@@ -308,7 +307,7 @@
                             var myPath = "/Content/images/add_new_phone/" + status;
                             $('#myUpload').attr("src", myPath);
                             $('#myUpload').attr("data-src", status);
-                            $('#imageURL').val = myPath;
+                            $('#Image').val = myPath;
                         }
                     },
                     processData: false,
