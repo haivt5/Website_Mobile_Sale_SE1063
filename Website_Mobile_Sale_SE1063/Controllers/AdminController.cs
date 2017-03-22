@@ -24,6 +24,8 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             return View(db.Phones.ToList().OrderBy(n => n.Category.Name).ToPagedList(pageNumber, pageSize));
         }
 
+        
+
         //public ActionResult AdminPhoneList(int categoryId)
         //{
         //    IPhoneService service = new PhoneService();
@@ -120,5 +122,31 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             db.SaveChanges();
             return RedirectToAction("AdminPhoneList");
         }
+
+
+        //CATEGORY
+
+        //List all categories
+        public ActionResult AdminCategoryList(int? page)
+        {
+            int pageNumber = (page ?? 1);
+            int pageSize = 5;
+            return View(db.Categories.ToList().OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
+        }
+
+        //Add new category
+        [HttpGet]
+        public ActionResult AdminAddNewCategory()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AdminAddNewCategory(Category category)
+        {
+            db.Categories.Add(category);
+                db.SaveChanges();
+            return View();
+        }
+
     }
 }

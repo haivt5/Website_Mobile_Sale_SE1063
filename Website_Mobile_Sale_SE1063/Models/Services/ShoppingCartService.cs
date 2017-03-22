@@ -77,6 +77,8 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             CartDetail cartDetail = this.Entities.CartDetails.FirstOrDefault(q => q.CartId == cartId && q.PhoneId == phoneId);
             IPhoneService phoneService = new PhoneService();
             PhoneViewModel phone = phoneService.GetById(phoneId);
+            if (phone.Quantity < quantity)
+                return -1;
             if (cartDetail != null)
             {
                 cartDetail.Quantity += quantity;
@@ -112,6 +114,10 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
 
         public int Update(int cartId, int phoneId, int quantity)
         {
+            IPhoneService phoneService = new PhoneService();
+            PhoneViewModel phone = phoneService.GetById(phoneId);
+            if (phone.Quantity < quantity)
+                return -1;
             ShoppingCart cart = this.Entities.ShoppingCarts.SingleOrDefault(q => q.Id == cartId);
             CartDetail cartDetail = this.Entities.CartDetails
                 .SingleOrDefault<CartDetail>(q => q.CartId == cartId && q.PhoneId == phoneId);
@@ -119,8 +125,7 @@ namespace Website_Mobile_Sale_SE1063.Models.Services
             cart.Quantity = cart.Quantity - cartDetail.Quantity.Value + quantity;
             cart.Total -= cartDetail.Total.Value;
 
-            IPhoneService phoneService = new PhoneService();
-            PhoneViewModel phone = phoneService.GetById(phoneId);
+            
             cartDetail.Quantity = quantity;
             cartDetail.Total = phone.Price * quantity;
 

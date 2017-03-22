@@ -82,10 +82,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -111,7 +108,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                 case SignInStatus.Failure:
                 default:
                     //ModelState.AddModelError("", "Invalid login attempt.");
-                    ViewBag.Error = "Invalid login attempt!";
+                    ViewBag.ErrorLogin = "Invalid login attempt!";
                     return View("Login");
             }
         }
@@ -203,7 +200,11 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         public async Task<ActionResult> RegisterWithoutModel(string Email, string Password, string PasswordConfirm)
         {
             if (Password != PasswordConfirm)
+            {
+                ViewBag.ErrorRegis = new String[] { "Password mismatch!"};
                 return View("Login");
+
+            }
             var user = new ApplicationUser { UserName = Email, Email = Email };
             var result = await UserManager.CreateAsync(user, Password);
             if (result.Succeeded)
@@ -222,7 +223,8 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             AddErrors(result);
 
             // If we got this far, something failed, redisplay form
-            return View();
+            ViewBag.ErrorRegis = result.Errors;
+            return View("Login");
         }
 
 

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Website_Mobile_Sale_SE1063.Models.Entities.Category>
+
+@{
+    ViewBag.Title = "AdminCategoryList";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<section>
+    <div id="page-wrapper">
+        <h2>AdminCategoryList</h2>
+        @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+        <div>
+            <button type="submit" class="btn btn-default" onclick="window.location.href='@Url.Action("AdminAddNewCategory","Admin")'">Add New Category</button>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <table class="table" width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.ParentId)
+                            </th>*@
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.ParentId)
+                                </td>*@
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.Id })*@ 
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                    
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </div>
+</section>

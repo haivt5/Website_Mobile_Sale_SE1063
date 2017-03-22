@@ -12,6 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1">
+                    
                     <div class="login-form">
                         <!--login form-->
                         <h2>Login to your account</h2>
@@ -24,6 +25,11 @@
                                 <input type="hidden" name="RememberMe" id="RememberMe"/>
                                 <input type="hidden" name="returnUrl" value="" />
                             </span>
+                            if (ViewBag.ErrorLogin != null)
+                            {
+                                <div class="text-danger">@ViewBag.ErrorLogin</div>
+
+                            }
                             <button type="submit" class="btn btn-default">Login</button>
                         }
                     </div><!--/login form-->
@@ -31,6 +37,7 @@
                 <div class="col-sm-1">
                     <h2 class="or">OR</h2>
                 </div>
+                
                 <div class="col-sm-4">
                     <div class="signup-form">
                         <!--sign up form-->
@@ -40,6 +47,16 @@
                             <input type="email" placeholder="Email Address" name="Email" />
                             <input type="password" placeholder="Password" name="Password"/>
                             <input type="password" placeholder="Confirm password" name="PasswordConfirm" />
+                            @if (ViewBag.ErrorRegis != null)
+                            {
+                                <div class="text-danger">
+                                    @foreach (var item in ViewBag.ErrorRegis)
+                                    {
+                                        @item <br />
+                                    }
+                                </div>
+
+                            }
                             <button type="submit" class="btn btn-default">Signup</button>
                         </form>
                     </div><!--/sign up form-->

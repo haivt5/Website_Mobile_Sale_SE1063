@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Coding\C#\Website_Mobile_Sale_SE1063\Website_Mobile_Sale_SE1063\Models\Entities\WebEntity.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\TokoHaru\Desktop\Project\Website_Mobile_Sale_SE1063\Models\Entities\WebEntity.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
