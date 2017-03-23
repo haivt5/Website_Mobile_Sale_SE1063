@@ -146,7 +146,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         {
             db.Categories.Add(category);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("AdminCategoryList");
         }
 
         //Edit category
@@ -174,8 +174,8 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             return View(category);
         }
         //Delete Category
-       
-        public ActionResult Delete(int? id)
+       [HttpGet]
+        public ActionResult DeleteConfirmed(int id)
         {
             Category category = db.Categories.Find(id);
             if (category == null)
@@ -185,11 +185,10 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             }
             return View(category);
         }
-        [HttpPost, ActionName("DeleteConfirmed")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult DeleteConfirmedCategory(int categoryId)
         {
-            Category category = db.Categories.Find(id);
+            Category category = db.Categories.Find(categoryId);
             db.Categories.Remove(category);
             db.SaveChanges();
             return RedirectToAction("AdminCategoryList");
