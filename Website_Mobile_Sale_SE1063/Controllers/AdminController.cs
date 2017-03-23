@@ -9,6 +9,7 @@ using Website_Mobile_Sale_SE1063.Models.ViewModels;
 using PagedList;
 using PagedList.Mvc;
 using System.IO;
+using WebApp.Common;
 using System.Data.Entity;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
@@ -16,6 +17,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
     public class AdminController : Controller
     {
         WebEntitiyManager db = new WebEntitiyManager();
+        FileUploader up = new FileUploader();
         public ActionResult AdminPhoneList(int? page)
         {
             int pageNumber = (page ?? 1);
@@ -40,41 +42,37 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         }
 
         [HttpPost]
-        public ActionResult AdminAddNewPhone(Phone phone, string imageURL)
+        public ActionResult AdminAddNewPhone(Phone phone, HttpPostedFileBase Image)
         {
             //var fileName = Path.GetFileName(fileUpload.FileName);
             //var path = Path.Combine(Server.MapPath("~/Content/images/add_new_phone"), fileName);
 
             ViewBag.CategoryID = new SelectList(db.Categories.ToList().OrderBy(n => n.Name), "Id", "Name");
+           
 
             if (ModelState.IsValid)
             {
-
+                //phone.Image = Image.FileName;
                 db.Phones.Add(phone);
-                try
-                {
-                    db.SaveChanges();
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    throw;
-                }
+                db.SaveChanges();
             }
-           
-            return View();
+            return RedirectToAction("AdminPhoneList");
         }
 
-        //Color Edit
         [HttpGet]
-        public ActionResult AddColor()
+        public ActionResult AdminEditPhone(int PhoneId)
         {
-           return View();
+            Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
+            if (phone == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(phone);
         }
 
         [HttpPost]
-        public ActionResult AddColor(Color col)
+        public ActionResult AdminEditPhone(Phone phone)
         {
             IPhoneService service = new PhoneService();
             List<PhoneViewModel> model = service.GetAll();
@@ -93,29 +91,10 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                 try
                 {
                     db.SaveChanges();
-
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    throw;
-                }
-            }
 
-            return View();
-        }
-        //Color Edit
-
-        [HttpGet]
-        public ActionResult AdminEditPhone(int PhoneId)
-        {
-            Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
-            if (phone == null)
-            {
-                Response.StatusCode = 404;
-                return null;
+                return RedirectToAction("AdminPhoneList");
             }
-            return View(phone);
         }
 
         public ActionResult AdminViewDetail(int PhoneId)
@@ -127,6 +106,32 @@ namespace Website_Mobile_Sale_SE1063.Controllers
                 return null;
             }
             return View(phone);
+        }
+
+        [HttpGet]
+        public ActionResult AdminDeletePhone(int PhoneId)
+        {
+            Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
+            if (phone == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(phone);
+        }
+
+        [HttpPost,ActionName("AdminDeletePhone")]
+        public ActionResult ConfirmDelete(int PhoneId)
+        {
+            Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
+            if (phone == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            db.Phones.Remove(phone);
+            db.SaveChanges();
+            return RedirectToAction("AdminPhoneList");
         }
 
 
@@ -179,8 +184,8 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             return View(category);
         }
         //Delete Category
-       
-        public ActionResult Delete(int? id)
+       [HttpGet]
+        public ActionResult DeleteConfirmed(int id)
         {
             Category category = db.Categories.Find(id);
             if (category == null)
@@ -190,11 +195,10 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             }
             return View(category);
         }
-        [HttpPost, ActionName("DeleteConfirmed")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult DeleteConfirmedCategory(int categoryId)
         {
-            Category category = db.Categories.Find(id);
+            Category category = db.Categories.Find(categoryId);
             db.Categories.Remove(category);
             db.SaveChanges();
             return RedirectToAction("AdminCategoryList");

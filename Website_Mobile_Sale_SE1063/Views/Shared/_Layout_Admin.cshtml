@@ -51,7 +51,7 @@
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
-                
+                    
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -91,22 +91,13 @@
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Admin Homepage </a>
                         </li>*@
                         <li>
-                            <a href="@Url.Action("AdminPhoneList","Admin")"><i class="fa fa-mobile-phone"></i> Phone List </a>
-                        </li>
-                        <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Manage Phone <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="@Url.Action("AdminAddNewPhone","Admin")"> Add New Phone </a>
+                                    <a href="@Url.Action("AdminPhoneList","Admin")"><i class="fa fa-mobile-phone"></i> Phone List </a>
                                 </li>
                                 <li>
-                                    <a href="login.html"> Detail Phone </a>
-                                </li>
-                                <li>
-                                    <a href="login.html"> Update Phone </a>
-                                </li>
-                                <li>
-                                    <a href="login.html"> Delete Phone </a>
+                                    <a href="@Url.Action("AdminAddNewPhone","Admin")"><i class="fa fa-mobile-phone"></i> Add New Phone </a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -146,15 +137,13 @@
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Color <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="@Url.Action("AddColor","Admin")"> Add Color </a>
+                                    <a href="blank.html"> Add Color </a>
                                 </li>
-                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <!--End edit-->
-      <li>
-                            <a href="@Url.Action("PhoneList","Phone")"><i class="fa fa-edit fa-fw"></i> Go to Shop </a>
+                        <li>
+                            <a href="@Url.Action("Index","Home")"><i class="fa fa-edit fa-fw"></i> Go to Shop </a>
                         </li>
                     </ul>
                 </div>

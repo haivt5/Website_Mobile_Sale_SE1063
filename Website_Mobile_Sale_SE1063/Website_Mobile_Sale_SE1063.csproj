@@ -502,6 +502,7 @@
     <Content Include="Views\Phone\PhoneSearch.cshtml" />
     <Content Include="Views\Admin\AdminEditPhone.cshtml" />
     <Content Include="Views\Admin\AdminViewDetail.cshtml" />
+    <Content Include="Views\Admin\AdminDeletePhone.cshtml" />
     <Content Include="Views\Admin\AddColor.cshtml" />
     <Content Include="Views\Admin\AdminCategoryList.cshtml" />
     <Content Include="Views\Admin\AdminAddNewCategory.cshtml" />

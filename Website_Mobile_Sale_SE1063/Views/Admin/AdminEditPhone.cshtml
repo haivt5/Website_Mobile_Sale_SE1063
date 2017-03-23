@@ -1,126 +1,231 @@
 ﻿@model Website_Mobile_Sale_SE1063.Models.Entities.Phone
+@using Website_Mobile_Sale_SE1063.Models.Entities
 
 @{
     ViewBag.Title = "AdminEditNewPhone";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>AdminEditNewPhone</h2>
 
-
-@using (Html.BeginForm())
-{
+<section>
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Phone</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Edit @Html.DisplayFor(Model => Model.Name)
+                </h1>
             </div>
-        </div>
+            <!-- /.col-lg-12 -->
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        EShopper - Phone
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("AdminAddNewPhone", "Admin", FormMethod.Post, new { @entype = "multipart/form-data" }))
+                        {
+                            <div class="row">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="col-lg-6">
+                                    <form role="form">
+                                        @*@Html.Hidden("Id",Model.Id)*@
+                                        <div class="form-group">
+                                            <label>Phone Name</label>
+                                            <div class="form-group">
+                                                @Html.DisplayFor(Model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.EditorFor(Model => Model.Name, new { htmlAttributes = new { @class = "form-control", HiddenInputAttribute=true } })
+                                                @Html.ValidationMessageFor(Model => Model.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Capacity (GB)</label>
+                                            <div class="form-group">
+                                                @*@Html.EditorFor(Model => Model.Capacity, new { htmlAttributes = new { @class = "form-control", @placeholder = "64" } })*@
+                                                @Html.DropDownListFor(Model => Model.Capacity, new List<SelectListItem> {new SelectListItem { Value = "1" , Text = "1" },
+                                                                                                                        new SelectListItem { Value = "2" , Text = "2" },
+                                                                                                                        new SelectListItem { Value = "4" , Text = "4" },
+                                                                                                                        new SelectListItem { Value = "8" , Text = "8" },
+                                                                                                                        new SelectListItem { Value = "16" , Text = "16" },
+                                                                                                                        new SelectListItem { Value = "32" , Text = "32" },
+                                                                                                                        new SelectListItem { Value = "64" , Text = "64" },
+                                                                                                                        new SelectListItem { Value = "128" , Text = "128" },
+                                                                                                                        new SelectListItem { Value = "256" , Text = "256" },
+                                                                                                                        new SelectListItem { Value = "512" , Text = "512" }}, new { @class = "form-control" })
+                                                @*@Html.ValidationMessageFor(Model => Model.Capacity, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Screen Resolution</label>
+                                            <div class="form-group">
+                                                @Html.EditorFor(Model => Model.ScreenResolution, new { htmlAttributes = new { @class = "form-group"} })
+                                                @Html.ValidationMessageFor(Model => Model.ScreenResolution, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Platform</label>
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(Model => Model.Platform, new List<SelectListItem> {new SelectListItem { Value = "iOS" , Text = "iOS" },
+                                                                                                                        new SelectListItem { Value = "Android" , Text = "Android" },
+                                                                                                                        new SelectListItem { Value = "Windows Phone" , Text = "Windows Phone" },
+                                                                                                                        new SelectListItem { Value = "Symbian" , Text = "Symbian" },
+                                                                                                                        new SelectListItem { Value = "Tizen OS" , Text = "Tizen OS" }}, new { @class = "form-group" })
+                                            </div>
+                                        </div>
+
+                                        @*<div class="form-group">
+                                                <label>Phone Images</label>
+                                                <div class="form-group">
+                                                    <input type="file" name="fileUpload">
+                                                </div>
+                                            </div>*@
+                                        <div class="input">
+                                            <label> Image </label>
+                                            <input type="file" class="upload" id="f_Upload" />
+                                            <img id="myUpload" alt="photo" style="max-width:100px" data-src="" />
+                                            <input type="hidden" name="imageURL" id="imageURL" />
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <div class="form-group">
+                                            @*@Html.EditorFor(Model => Model.CategoryID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Apple" } })*@
+                                            @Html.DropDownListFor(Model => Model.CategoryID, new List<SelectListItem> {new SelectListItem { Value = "1" , Text = "Samsung" },
+                                                                                                                        new SelectListItem { Value = "2" , Text = "Apple" },
+                                                                                                                        new SelectListItem { Value = "3" , Text = "Xiaomi" },
+                                                                                                                        new SelectListItem { Value = "4" , Text = "Sony" },
+                                                                                                                        new SelectListItem { Value = "5" , Text = "LG" }}, new { @class = "form-control" })
+                                            @*@Html.ValidationMessageFor(Model => Model.CategoryID, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>RAM (GB)</label>
+                                        <div class="form-group">
+                                            @Html.DropDownListFor(Model => Model.RAM, new List<SelectListItem> {new SelectListItem { Value = "1" , Text = "1" },
+                                                                                                                        new SelectListItem { Value = "2" , Text = "2" },
+                                                                                                                        new SelectListItem { Value = "3" , Text = "3" },
+                                                                                                                        new SelectListItem { Value = "4" , Text = "4" },
+                                                                                                                        new SelectListItem { Value = "5" , Text = "5" }}, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Quantity in Stock</label>
+                                        <div class="form-group">
+                                            @Html.EditorFor(Model => Model.Quantity, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(Model => Model.Quantity, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Price (USD)</label>
+                                        <div class="form-group">
+                                            @Html.EditorFor(Model => Model.Price, new { @class = "form-control"})
+                                            @Html.ValidationMessageFor(Model => Model.Price, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Description of Phone</label>
+                                        <div class="form-group">
+                                            @Html.EditorFor(Model => Model.Description, new { @class = "form-control"})
+                                            @Html.ValidationMessageFor(Model => Model.Description, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+                                    @*<div class="form-group">
+                                            <label>Color</label>
+                                            <input class="form-control" placeholder="Black">
+                                        </div>*@
+
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <br />
+                                <button type="submit" value="Save" class="btn btn-default">Save to Database</button>
+                            </div>
+
+                            <!-- /.row (nested) -->
+                        }
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+                <div>
+                    @Html.ActionLink("Back to List", "AdminPhoneList")
+                </div>
             </div>
+            <!-- /.col-lg-12 -->
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ScreenResolution, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ScreenResolution, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ScreenResolution, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!--EditPhonePage add color label-->
-        <div class="form-group">
-            @Html.LabelFor(model => model.Colors, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Colors, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Colors, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-   
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RAM, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RAM, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RAM, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Platform, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Platform, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Platform, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+        <!-- /.row -->
     </div>
-}
+    <!-- /#page-wrapper -->
 
-<div>
-    @Html.ActionLink("Back to List", "AdminPhoneList")
-</div>
 
-@section Scripts {
+    
+
+    @*script save image*@
+    @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                var url = window.URL || window.webkitURL;
+                $("#f_Upload").on('change', function () {
+                    var file, img;
+                    if ((file = this.files[0])) {
+                        img = new Image();
+                        img.onload = function () {
+                            sendFile(file);
+                        };
+                        img.onerror = function () {
+                            //error message
+                        };
+                        img.src = url.createObjectURL(file);
+                    }
+                });
+            });
+
+            function sendFile(file) {
+                var formData = new FormData();
+                formData.append('file', $('#f_Upload')[0].files[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Common/FileUploader.ashx',
+                    data: formData,
+                    success: function (status) {
+                        if (status != 'error') {
+                            var myPath = "/Content/images/add_new_phone/" + status;
+                            $('#myUpload').attr("src", myPath);
+                            $('#myUpload').attr("data-src", status);
+                            $('#imageURL').val = myPath;
+                        }
+                    },
+                    processData: false,
+                    contentType: false,
+                    error: function () {
+                        //error message
+                    }
+                });
+            }
+        </script>
+    }
+
+
+</section>

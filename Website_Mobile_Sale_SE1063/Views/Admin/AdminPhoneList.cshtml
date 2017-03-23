@@ -36,16 +36,11 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.First().Image)
                             </th>
-                        
                             <th>
                                 @Html.DisplayNameFor(model => model.First().Price)
                             </th>
-                             <th>
-                                Action
-                            </th>
-                            <!--add column Display Colors-->
                             <th>
-                                @Html.DisplayNameFor(model => model.First().Colors)
+                                Action
                             </th>
                         </tr>
 
@@ -73,15 +68,7 @@
                                 <td>
                                     @Html.ActionLink("Edit", "AdminEditPhone", new { @PhoneId = item.Id }) |
                                     @Html.ActionLink("Details", "AdminViewDetail", new { @PhoneId = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { @PhoneId = item.Id })    |
-                                   
-                                    @*@Html.ActionLink("Delete", "Delete", new { @PhoneId = item.Id })*@
-
-                                </td>
-
-                                <!--Add colors info-->
-                                <td>
-                                    @Html.DisplayFor(@PhoneId => item.Colors)
+                                    @Html.ActionLink("Delete", "AdminDeletePhone", new { @PhoneId = item.Id })
                                 </td>
                             </tr>
                         }
@@ -97,10 +84,6 @@
                             display: inline;
                         }
                     </style>
-
-                    <div>
-                        <button type="submit" class="btn btn-default">Add New Phone</button>
-                    </div>
                 </div>
                 <!-- /.panel -->
             </div>

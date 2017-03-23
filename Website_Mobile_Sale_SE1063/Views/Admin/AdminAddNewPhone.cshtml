@@ -105,8 +105,6 @@
 </section>*@
 
 <section>
-    
-    
         @Html.AntiForgeryToken()
 
         <div id="page-wrapper">
@@ -167,7 +165,31 @@
                                             </div>
                                         </div>
 
-                                       </form>
+                                        <div class="form-group">
+                                            <label>Platform</label>
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(Model => Model.Platform, new List<SelectListItem> {new SelectListItem { Value = "iOS" , Text = "iOS" },
+                                                                                                                        new SelectListItem { Value = "Android" , Text = "Android" },
+                                                                                                                        new SelectListItem { Value = "Windows Phone" , Text = "Windows Phone" },
+                                                                                                                        new SelectListItem { Value = "Symbian" , Text = "Symbian" },
+                                                                                                                        new SelectListItem { Value = "Tizen OS" , Text = "Tizen OS" }}, new { @class = "form-group" })
+                                            </div>
+                                        </div>
+
+                                        @*<div class="form-group">
+                                            <label>Phone Images</label>
+                                            <div class="form-group">
+                                                <input type="file" name="fileUpload">
+                                            </div>
+                                        </div>*@
+                                        <div class="input" >
+                                            <label> Image </label>
+                                            <input type="file" class="upload" id = "f_Upload" />
+                                            <img id="myUpload" alt="photo" style="max-width:100px" data-src="" />
+                                            <input type="hidden" name="Image" id="Image" />
+                                        </div>
+                                        
+                                    </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                                 <div class="col-lg-6">
@@ -254,6 +276,9 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                    <div>
+                        @Html.ActionLink("Back to List", "AdminPhoneList")
+                    </div>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -262,63 +287,9 @@
         <!-- /#page-wrapper -->
     
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-
-    <!--script save color data-->
-   @*<div>
-     <script type="text/javascript">
-        function InsertRecord()
-        {
-           
-            var txtcolo = document.getElementById('txtcity').value;
-            if (txtid.length != 0 || txtname.length !=0 || txtsalary.length !=0|| txtcity.length !=0)
-            {
-                var connection = new ActiveXObject("ADODB.Connection");
-                var connectionstring = "Data Source=HUNGDMSE61294\SQLEXPRESS;Initial Catalog=EmpDetail;Persist Security Info=True;User ID=sa;Password=123RainSora;Provider=SQLOLEDB";
-                connection.Open(connectionstring);
-                var rs = new ActiveXObject("ADODB.Recordset");
-                rs.Open("insert into Phone values('" + txtid + "','" + txtname + "','" + txtsalary + "','" + txtcity + "')", connection);
-                alert("Insert Record Successfuly");
-                txtid.value = " ";
-                connection.close();
-            }
-            else
-            {
-                alert("Please Input Colors ");
-
-            }
-        }
-        function ShowAll()
-        {
-                var connection = new ActiveXObject("ADODB.Connection");
-                var connectionstring = "Data Source=.;Initial Catalog=EmpDetail;Persist Security Info=True;User ID=sa;Password=****;Provider=SQLOLEDB";
-                connection.Open(connectionstring);
-                var rs = new ActiveXObject("ADODB.Recordset");
-                rs.Open("select * from Emp_Info ", connection);
-                rs.MoveFirst();
-                var span = document.createElement("span");
-                span.style.color = "Blue";
-                span.innerText = "  ID " + "  Name " + "  Salary" + " City ";
-                document.body.appendChild(span);
-                while (!rs.eof)
-                {
-                    var span = document.createElement("span");
-                    span.style.color = "green";
-                    span.innerText = "\n " + rs.fields(0) + " |  " + rs.fields(1) + " |  " + rs.fields(2) + " |  " + rs.fields(3);
-                    document.body.appendChild(span);
-                    rs.MoveNext();
-                }
-                rs.close();
-                connection.close();
-            }
-    </script>
-       </div>*@
     
-    <!--end script-->>
 
-    //script save image
+    @*script save image*@
     @section Scripts {
         <script type="text/javascript">
 
@@ -351,7 +322,7 @@
                             var myPath = "/Content/images/add_new_phone/" + status;
                             $('#myUpload').attr("src", myPath);
                             $('#myUpload').attr("data-src", status);
-                            $('#imageURL').val = myPath;
+                            $('#Image').val = myPath;
                         }
                     },
                     processData: false,
@@ -363,6 +334,6 @@
             }
         </script>
     }
-
+        
 
 </section>
