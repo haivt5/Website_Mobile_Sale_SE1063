@@ -183,6 +183,10 @@
 
         $('#total-area').html(s2);
 
+        if (data.CartDetails.length == 0) {
+            $('#btn-checkout').attr('disabled', true);
+        }
+
 
 
         @*$('#btn-checkout').click(function () {

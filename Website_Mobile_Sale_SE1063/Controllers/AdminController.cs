@@ -9,6 +9,7 @@ using Website_Mobile_Sale_SE1063.Models.ViewModels;
 using PagedList;
 using PagedList.Mvc;
 using System.IO;
+using System.Data.Entity;
 
 namespace Website_Mobile_Sale_SE1063.Controllers
 {
@@ -22,7 +23,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
             return View(db.Phones.ToList().OrderBy(n => n.Category.Name).ToPagedList(pageNumber, pageSize));
         }
 
-        
+
 
         //public ActionResult AdminPhoneList(int categoryId)
         //{
@@ -109,7 +110,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         public ActionResult AdminEditPhone(int PhoneId)
         {
             Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
-            if(phone == null)
+            if (phone == null)
             {
                 Response.StatusCode = 404;
                 return null;
@@ -120,7 +121,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         public ActionResult AdminViewDetail(int PhoneId)
         {
             Phone phone = db.Phones.SingleOrDefault(n => n.Id == PhoneId);
-            if(phone == null)
+            if (phone == null)
             {
                 Response.StatusCode = 404;
                 return null;
@@ -135,7 +136,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         public ActionResult AdminCategoryList(int? page)
         {
             int pageNumber = (page ?? 1);
-            int pageSize = 5;
+            int pageSize = 10;
             return View(db.Categories.ToList().OrderBy(n => n.Name).ToPagedList(pageNumber, pageSize));
         }
 
@@ -149,9 +150,56 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         public ActionResult AdminAddNewCategory(Category category)
         {
             db.Categories.Add(category);
-                db.SaveChanges();
-            return View();
+            db.SaveChanges();
+            return RedirectToAction("AdminCategoryList");
         }
+
+        //Edit category
+
+        [HttpGet]
+        public ActionResult AdminEditNewCategory(int CategoryID)
+        {
+            Category category = db.Categories.Find(CategoryID);
+            if (category == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(category);
+        }
+        [HttpPost]
+        public ActionResult AdminEditNewCategory(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(category).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("AdminCategoryList");
+            }
+            return View(category);
+        }
+        //Delete Category
+       
+        public ActionResult Delete(int? id)
+        {
+            Category category = db.Categories.Find(id);
+            if (category == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(category);
+        }
+        [HttpPost, ActionName("DeleteConfirmed")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Category category = db.Categories.Find(id);
+            db.Categories.Remove(category);
+            db.SaveChanges();
+            return RedirectToAction("AdminCategoryList");
+        }
+
 
     }
 }
