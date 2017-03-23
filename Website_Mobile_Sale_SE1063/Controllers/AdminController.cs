@@ -101,7 +101,7 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         {
             db.Categories.Add(category);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("AdminCategoryList");
         }
 
         //Edit category
