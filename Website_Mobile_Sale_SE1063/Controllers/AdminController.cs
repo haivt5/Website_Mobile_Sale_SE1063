@@ -48,12 +48,58 @@ namespace Website_Mobile_Sale_SE1063.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
                 db.Phones.Add(phone);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    throw;
+                }
             }
+           
             return View();
         }
+
+        //Color Edit
+        [HttpGet]
+        public ActionResult AddColor()
+        {
+           return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddColor(Color col)
+        {
+           
+            if (ModelState.IsValid)
+            {
+                int colid = 0;
+                List<Color> colors = db.Colors.ToList();
+                if (colors.Count > 0)
+                    colid = colors.Last().Id + 1;
+
+                col.Id = colid;
+                db.Colors.Add(col);
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    throw;
+                }
+            }
+
+            return View();
+        }
+        //Color Edit
 
         [HttpGet]
         public ActionResult AdminEditPhone(int PhoneId)
