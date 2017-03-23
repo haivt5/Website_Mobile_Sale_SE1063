@@ -75,7 +75,11 @@ namespace Website_Mobile_Sale_SE1063.Controllers
         [HttpPost]
         public ActionResult AddColor(Color col)
         {
-           
+            IPhoneService service = new PhoneService();
+            List<PhoneViewModel> model = service.GetAll();
+
+            ViewBag.CategoryID = new SelectList(db.Phones);
+
             if (ModelState.IsValid)
             {
                 int colid = 0;
