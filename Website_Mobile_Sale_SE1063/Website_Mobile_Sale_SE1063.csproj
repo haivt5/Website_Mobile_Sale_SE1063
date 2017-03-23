@@ -213,7 +213,6 @@
       <DependentUpon>FileUploader.ashx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountInfoController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartDetailController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />

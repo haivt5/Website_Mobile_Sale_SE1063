@@ -140,6 +140,7 @@
                     if (result.Success == true) {
                         alert('Complete successfully');
                         localStorage.removeItem("mobile_cart");
+                        window.location = '@Url.Action("Index", "Home")';
                     } else {
                         alert(result.Error);
                     }

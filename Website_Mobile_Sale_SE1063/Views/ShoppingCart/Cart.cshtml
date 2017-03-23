@@ -39,9 +39,9 @@
             <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
         </div>
         <div class="row">
-            <div class="col-sm-6">
-
                 <!--Test Delete-->
+            @*<div class="col-sm-6">
+
                 <div class="chose_area">
                     <ul class="user_option">
                         <li>
@@ -94,7 +94,7 @@
                     <a class="btn btn-default update" href="">Get Quotes</a>
                     <a class="btn btn-default check_out" href="">Continue</a>
                 </div>
-            </div>
+            </div>*@
             <div class="col-sm-6">
                 <div class="total_area" id="total-area">
                     @*<ul>
@@ -182,6 +182,8 @@
                     '<a class="btn btn-default check_out" id="btn-checkout" href="/ShoppingCart/Checkout?cartId=' + cart.Id + '">Check Out</a>';
 
         $('#total-area').html(s2);
+
+
 
         @*$('#btn-checkout').click(function () {
             $.ajax({
