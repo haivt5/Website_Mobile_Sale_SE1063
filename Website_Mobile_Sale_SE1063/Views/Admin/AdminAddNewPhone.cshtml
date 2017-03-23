@@ -167,79 +167,7 @@
                                             </div>
                                         </div>
 
-                                        <div>
-                                        <!--Change color-->
-                                        <label>Change Color</label>
-                                        <div class="form-group">
-                                            @Html.EditorFor(Model => Model.Colors, new { htmlAttributes = new { @class = "form-group", @placeholder = "Choose Color" } })
-                                            @Html.ValidationMessageFor(Model => Model.Colors, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group">
-                                           <div>
-                                             <!--Add Color dropdownlist-->
-                                            
-                                            @Html.DropDownListFor(Model => Model.Name, new List<SelectListItem> {new SelectListItem { Value = "1" , Text = "Pink" },
-                                                                                                                new SelectListItem { Value = "2" , Text = "Red" },
-                                                                                                                new SelectListItem { Value = "3" , Text = "Blue" }},  new { @class = "form-control" })
-                                                              <!--OnConfirmMessage-->
-                                            @*<script>
-                                                function myFunction()
-                                                {
-                                                    var x;
-                                                    if (confirm("Do you want to test color prduct!") == true) {
-                                                        x = "You pressed OK!";
-                                                    } else {
-                                                        x = null;
-                                                    }
-                                                    document.getElementById("demo").innerHTML = x;
-                                                }
-
-                                            $('#cmbMoreFunction').change(function()
-                                            {
-                                            var selectedValue = parseInt(jQuery(this).val());
-
-                                            switch(selectedValue){
-                                            case 0:
-                                            myFunction();
-                                            break;
-                                            case 1:
-                                             break;
-                                             default:
-                                            alert("catch default");
-                                            break;
-                                            }
-                                            });
-                                            </script>*@      
-                                               </div>
-                                               </div>                     
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label>Platform</label>
-                                            <div class="form-group">
-                                                @Html.DropDownListFor(Model => Model.Platform, new List<SelectListItem> {new SelectListItem { Value = "iOS" , Text = "iOS" },
-                                                                                                                        new SelectListItem { Value = "Android" , Text = "Android" },
-                                                                                                                        new SelectListItem { Value = "Windows Phone" , Text = "Windows Phone" },
-                                                                                                                        new SelectListItem { Value = "Symbian" , Text = "Symbian" },
-                                                                                                                        new SelectListItem { Value = "Tizen OS" , Text = "Tizen OS" }}, new { @class = "form-group" })
-                                            </div>
-                                        </div>
-
-                                        @*<div class="form-group">
-                                            <label>Phone Images</label>
-                                            <div class="form-group">
-                                                <input type="file" name="fileUpload">
-                                            </div>
-                                        </div>*@
-                                        <div class="input" >
-                                            <label> Image </label>
-                                            <input type="file" class="upload" id = "f_Upload" />
-                                            <img id="myUpload" alt="photo" style="max-width:100px" data-src="" />
-                                            <input type="hidden" name="imageURL" id="imageURL" />
-                                        </div>
-                                        
-                                    </form>
+                                       </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                                 <div class="col-lg-6">
@@ -301,7 +229,7 @@
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                                 <br/>
-                                <button type="submit" value="Create" class="btn btn-default">Save to Database
+                                <button type="submit" formaction="AdminAddNewPhone" class="btn btn-default">Save to Database
                                 <script>   
                                     function CheckValidField()
                                     {

@@ -6,7 +6,7 @@
 }
 
 <h2>AddColor</h2>
-<section>
+
     <section>
 
 
@@ -28,16 +28,13 @@
                             EShopper - Phone
                         </div>
                         <div class="panel-body">
-                            @using (Html.BeginForm("AdminAddNewPhone", "Admin", FormMethod.Post, new { @entype = "multipart/form-data" }))
+                            @using (Html.BeginForm("AddColor", "Admin", FormMethod.Post, new { @entype = "multipart/form-data" }))
                             {
                                 <div class="row">
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                     <div class="col-lg-6">
                                         <form role="form">
-
-                                        
-
 
                                             <div>
                                                 <!--Change color-->
@@ -47,77 +44,26 @@
                                                     <div>
                                                         <!--Add Color dropdownlist-->
 
-                                                        @Html.DropDownListFor(Model => Model.Name, new List<SelectListItem> {new SelectListItem { Value = "1" , Text = "Pink" },
-                                                                                                                new SelectListItem { Value = "2" , Text = "Red" },
-                                                                                                                new SelectListItem { Value = "3" , Text = "Blue" }}, new { @class = "form-control" })
-                                                        <!--OnConfirmMessage-->
-                                                        @*<script>
-                                                                function myFunction()
-                                                                {
-                                                                    var x;
-                                                                    if (confirm("Do you want to test color prduct!") == true) {
-                                                                        x = "You pressed OK!";
-                                                                    } else {
-                                                                        x = null;
-                                                                    }
-                                                                    document.getElementById("demo").innerHTML = x;
-                                                                }
-
-                                                            $('#cmbMoreFunction').change(function()
-                                                            {
-                                                            var selectedValue = parseInt(jQuery(this).val());
-
-                                                            switch(selectedValue){
-                                                            case 0:
-                                                            myFunction();
-                                                            break;
-                                                            case 1:
-                                                             break;
-                                                             default:
-                                                            alert("catch default");
-                                                            break;
-                                                            }
-                                                            });
-                                                            </script>*@
+                                                        @Html.DropDownListFor(Model => Model.Name, new List<SelectListItem> {new SelectListItem { Value = "Pink" , Text = "Pink" },
+                                                                                                                new SelectListItem { Value = "Red" , Text = "Red" },
+                                                                                                                new SelectListItem { Value = "Blue" , Text = "Blue" }}, new { @class = "form-control" })
+                                                        @Html.EditorFor(Model => Model.PhoneId)
+                                                       
+                                                     
                                                     </div>
                                                 </div>
                                             </div>
-
-
-                                        
-
-                                            @*<div class="form-group">
-                                                    <label>Phone Images</label>
-                                                    <div class="form-group">
-                                                        <input type="file" name="fileUpload">
-                                                    </div>
-                                                </div>*@
-                                         
-
+                                    
                                         </form>
                                     </div>
-                                    <!-- /.col-lg-6 (nested) -->
-                                    <div class="col-lg-6">
-
-                                        <div class="form-group">
-                                           
-                                            <div class="form-group">
-                                               
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-                                    <!-- /.col-lg-6 (nested) -->
+                                 
                                     <br />
-                                    <button type="submit" value="Create" class="btn btn-default">
+                                    <button type="submit" formaction="AddColor" class="btn btn-default">
                                         Save Color
                                         <script>
 
                                         </script>
                                     </button>
-                                    <button type="reset" class="btn btn-default">Reset Form</button>
                                 </div>
 
                             <!-- /.row (nested) -->
@@ -132,7 +78,6 @@
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
-
 
         <div>
             @Html.ActionLink("Back to List", "Index")

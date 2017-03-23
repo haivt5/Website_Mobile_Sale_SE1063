@@ -76,7 +76,12 @@ namespace Website_Mobile_Sale_SE1063.Controllers
            
             if (ModelState.IsValid)
             {
+                int colid = 0;
+                List<Color> colors = db.Colors.ToList();
+                if (colors.Count > 0)
+                    colid = colors.Last().Id + 1;
 
+                col.Id = colid;
                 db.Colors.Add(col);
                 try
                 {
